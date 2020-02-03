@@ -19,3 +19,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-12
 #    && rm -rf /var/lib/apt/lists/*
 # ENV DEBIAN_FRONTEND=dialog
 
+USER node
+ARG HOME=/home/node
+
+RUN npm install -g yo generator-rznode
