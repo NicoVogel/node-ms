@@ -11,7 +11,13 @@
 	"extensions": [
 		"dbaeumer.vscode-eslint",
 		"ms-vscode.vscode-typescript-tslint-plugin",
-		"yzhang.markdown-all-in-one"
+		"yzhang.markdown-all-in-one",
+		"mutantdino.resourcemonitor",
+		"esbenp.prettier-vscode"
+	],
+	"appPort": [
+		"3000:3000",
+		"3001:3001"
 	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
