@@ -1,5 +1,5 @@
 const CONN_URL = 'amqp://rabbitmq';
-const queueName = 'test';
+const exchangeName = 'logs';
 const waitForSeconds = 6;
 
 
@@ -9,11 +9,8 @@ setTimeout(async () => {
   try {
     const connection = await require('amqplib').connect(CONN_URL);
     channel = await connection.createChannel();
-    const channelok = await channel.assertQueue(queueName);
-    if (!channelok) {
-      throw new Error('could not connect to channel');
-    }
-    channel.sendToQueue(queueName, Buffer.from('something to do'))
+    await channel.assertExchange(exchangeName, 'fanout', { durable: false })
+    channel.publish(exchangeName, '', Buffer.from('Hello World!'));
   } catch (error) {
     console.warn(error);
   }
