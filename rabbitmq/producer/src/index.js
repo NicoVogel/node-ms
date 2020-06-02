@@ -1,43 +1,34 @@
 const CONN_URL = 'amqp://rabbitmq';
 const exchangeName = 'logs';
-const waitForSeconds = 6;
+const waitForSeconds = 9;
 
 
-let channel = null;
+let closeConnection = null;
 
 setTimeout(async () => {
   try {
     const connection = await require('amqplib').connect(CONN_URL);
-    channel = await connection.createChannel();
+    const channel = await connection.createChannel();
+    closeConnection = () => {
+      channel.close();
+      connection.close();
+    }
     await channel.assertExchange(exchangeName, 'fanout', { durable: false })
-    channel.publish(exchangeName, '', Buffer.from('Hello World!'));
+    for (let index = 0; index <= 100000; index++) {
+      channel.publish(exchangeName, '', Buffer.from(`${index}: 'Hello World!'`))
+    }
   } catch (error) {
     console.warn(error);
   }
 }, 1000 * waitForSeconds);
 
 
-process.on('exit', () => {
-  if (channel) {
+const close = () => {
+  if (closeConnection) {
     console.log('gracefull exit');
-    channel.close();
+    closeConnection();
   }
-})
+}
 
-
-
-
-
-
-
-
-
-// setTimeout(() => {
-//   const open = require('amqplib').connect(CONN_URL);
-//   open.then(connection => connection.createChannel())
-//     .then(channel => channel.assertQueue(queueName)
-//       .then(() => channel.sendToQueue(queueName), Buffer.from('something to do')).catch(console.warn)
-//     ).catch(console.warn);
-// }, 1000 * waitForSeconds);
-
-
+process.on('SIGINT', close)
+process.on('exit', close);
