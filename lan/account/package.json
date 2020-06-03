@@ -4,7 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node .",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run debug",
+    "start:prod": "node .",
+    "predebug": "rimraf dist/*",
+    "debug": "tsc-watch --onSuccess \"node --inspect=0.0.0.0:9229 dist/index.js\" --onFailure \"echo WHOOPS! Server compilation failed\"",
     "build": "tsc -b tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*",
@@ -15,19 +18,22 @@
   "license": "MIT",
   "devDependencies": {
     "@types/assert": "^1.4.6",
+    "@types/express": "^4.17.6",
     "@types/mocha": "^7.0.2",
-    "@types/node": "^13.13.2",
     "@types/mongoose": "^5.7.21",
+    "@types/node": "^13.13.9",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "assert": "^2.0.0",
     "eslint": "^6.8.0",
+    "if-env": "^1.0.4",
     "mocha": "^7.1.1",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "ts-loader": "^7.0.5",
     "ts-node": "^8.9.0",
-    "typescript": "^3.9.3",
-    "@types/express": "^4.17.6"
+    "tsc-watch": "^4.2.8",
+    "typescript": "^3.9.3"
   },
   "dependencies": {
     "express": "^4.17.1",

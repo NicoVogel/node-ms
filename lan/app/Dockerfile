@@ -16,8 +16,7 @@ COPY nginx/* /scripts/
 
 RUN chmod +x scripts/docker_entrypoint.sh
 
-ENV EXPIRES=30d \
-  PORT=8080 \
+ENV PORT=8080 \
   SERVER_NAME=localhost
 
 COPY --from=builder /ng-app/dist/app /app

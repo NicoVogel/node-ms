@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.0.0",
   "scripts": {
+    "debug": "ng serve --host 0.0.0.0 --disable-host-check --poll=100",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
