@@ -1,8 +1,9 @@
 const CONN_URL = 'amqp://rabbitmq';
 const exchangeName = 'logs';
-const waitForSeconds = 9;
+const waitForSeconds = 11;
 
 
+const requestCount = 100000;
 let closeConnection = null;
 
 setTimeout(async () => {
@@ -14,9 +15,16 @@ setTimeout(async () => {
       connection.close();
     }
     await channel.assertExchange(exchangeName, 'fanout', { durable: false })
-    for (let index = 0; index <= 100000; index++) {
+    console.log('start transmission')
+    const startTime = Date.now();
+    for (let index = 0; index <= requestCount; index++) {
       channel.publish(exchangeName, '', Buffer.from(`${index}: 'Hello World!'`))
+      if (index % (requestCount / 10) == 0) {
+        console.log(`send progress ${(index / requestCount) * 100}%`)
+      }
     }
+    channel.publish(exchangeName, '', Buffer.from(`end`))
+    console.log(`end transmission after ${Date.now() - startTime}ms`)
   } catch (error) {
     console.warn(error);
   }
