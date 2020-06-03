@@ -7,6 +7,6 @@
     "start": "node ."
   },
   "dependencies": {
-    "kafka-node": "^5.0.0"
+    "kafkajs": "^1.12.0"
   }
 }
