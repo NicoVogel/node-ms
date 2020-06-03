@@ -35,7 +35,7 @@ const run = async () => {
     const batches = 10;
     const limit = requestAmount / batches;
     requests = [];
-    for (let j = 0; j < batches; j++) {
+    for (let j = 0; j <= batches; j++) {
         let messages = [];
         for (let index = 0; index <= limit; index++) {
             messages.push({ value: `${index * j}: 'Hello World!' -2` })
