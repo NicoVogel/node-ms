@@ -1,6 +1,6 @@
 FROM node:12-alpine3.11
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 
@@ -10,4 +10,9 @@ COPY . .
 
 RUN npm run build
 
-CMD [ "npm", "start" ]
+# interactive
+RUN npm install -g nodemon
+CMD [ "nodemon", "./dist/index.js" ]
+
+#operation
+# CMD [ "npm", "start" ]

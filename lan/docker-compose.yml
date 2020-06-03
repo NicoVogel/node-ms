@@ -5,8 +5,6 @@ services:
     ports: 
       - 80:80
       - 443:443
-    # volumes: 
-      # - app/dist/app:/app
     environment: 
       PORT: 80
   mongodb:
@@ -19,3 +17,5 @@ services:
       MONGO_INITDB_DATABASE: example
   account:
     build: account
+    volumes:
+      - ./account/dist:/app/dist
