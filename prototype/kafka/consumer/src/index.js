@@ -8,6 +8,7 @@ const kafka = new Kafka({
 let startTime;
 const topic = 'logs';
 const waitForSeconds = 10;
+const requestAmount = 100000;
 const consumer = kafka.consumer({ groupId: `group${Math.floor(Math.random() * Math.floor(100000))}` });
 const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')}]: ${msg}`)
 
@@ -16,11 +17,15 @@ const run = async () => {
     await consumer.subscribe({ topic, fromBeginning: true })
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
-            const match = message.value.toString().match(/(\d+):/);
+            const match = message.value.toString().match(/(\d+):.*\-(\d)/);
             if (match[1] == 0) {
                 startTime = Date.now()
-            } else if (match[1] == 10000) {
-                log(`done after: ${Date.now() - startTime}ms`);
+            } else if (match[1] == requestAmount) {
+                log(`done after with [${match[2]}]: ${Date.now() - startTime}ms`);
+            } else {
+                if (match[1] % (requestAmount / 10) == 0) {
+                    log(`consumed [${match[2]}] by ${(match[1] / requestAmount) * 100}%`)
+                }
             }
         },
     })

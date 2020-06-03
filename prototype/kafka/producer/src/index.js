@@ -5,7 +5,7 @@ const kafka = new Kafka({
     brokers: ['kafka:9092']
 })
 
-const requestAmount = 10000;
+const requestAmount = 100000;
 const producer = kafka.producer();
 const waitForSeconds = 11;
 
@@ -15,32 +15,38 @@ const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ').
 
 const run = async () => {
     await producer.connect()
-    console.log('\n\n\n\n');
     let startTime;
     log(`**start Sending ${requestAmount} single requests`)
     startTime = Date.now();
-    const requests = [];
+    let requests = [];
     for (let index = 0; index <= requestAmount; index++) {
         requests.push(producer.send({
             topic: 'logs',
-            messages: [{ value: `${index}: 'Hello World!'` }]
+            messages: [{ value: `${index}: 'Hello World!' -1` }]
         }));
+        if (index % (requestAmount / 10) === 0) {
+            log(`progress: ${(index / requestAmount) * 100}%`)
+        }
     }
-    await Promise.all(requests);
-    console.log('\n\n\n\n');
+    // await Promise.all(requests);
     log(`**done sending after ${Date.now() - startTime}ms`);
-    
-    console.log('\n\n\n\n');
+
     log(`**start Sending ${requestAmount} in batches requests`)
-    const messages = [];
-    for (let index = 0; index <= requestAmount; index++) {
-        messages.push({ value: `${index}: 'Hello World!'` })
+    const batches = 10;
+    const limit = requestAmount / batches;
+    requests = [];
+    for (let j = 0; j < batches; j++) {
+        let messages = [];
+        for (let index = 0; index <= limit; index++) {
+            messages.push({ value: `${index}: 'Hello World!' -2` })
+        }
+        requests.push(producer.send({
+            topic: 'logs',
+            messages,
+        }));
+        log(`progress: ${j * 10}%`)
     }
-    await producer.send({
-        topic: 'logs',
-        messages,
-    });
-    console.log('\n\n\n\n');
+    // await Promise.all(requests);
     log(`**done sending after ${Date.now() - startTime}ms`);
 }
 
