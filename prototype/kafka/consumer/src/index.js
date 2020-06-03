@@ -5,7 +5,8 @@ const kafka = new Kafka({
     brokers: ['kafka:9092']
 });
 
-let startTime;
+let startTime = {};
+let counter = {};
 const topic = 'logs';
 const waitForSeconds = 10;
 const requestAmount = 100000;
@@ -17,14 +18,25 @@ const run = async () => {
     await consumer.subscribe({ topic, fromBeginning: true })
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
-            const match = message.value.toString().match(/(\d+):.*\-(\d)/);
-            if (match[1] == 0) {
-                startTime = Date.now()
-            } else if (match[1] == requestAmount) {
-                log(`done after with [${match[2]}]: ${Date.now() - startTime}ms`);
+
+            const msg = message.value.toString();
+            if (msg.startsWith('end')) {
+                const match = msg.match(/.*\-(\w+)/);
+                log(`done after with [${match[1]}]: ${Date.now() - startTime[match[1]]}ms`);
+                return;
+            }
+
+            const match = msg.match(/(\d+):.*\-(\w+)/);
+            if (!counter[match[2]]) {
+                counter[match[2]] = 0;
+            }
+            counter[match[2]]++;
+
+            if (!startTime[match[2]]) {
+                startTime[match[2]] = Date.now();
             } else {
-                if (match[1] % (requestAmount / 10) == 0) {
-                    log(`consumed [${match[2]}] by ${(match[1] / requestAmount) * 100}%`)
+                if (counter[match[2]] % (requestAmount / 10) == 0) {
+                    log(`consumed [${match[2]}] by ${(counter[match[2]] / requestAmount) * 100}% (index/counter - ${match[1] + 1}/${counter[match[2]]})`)
                 }
             }
         },
