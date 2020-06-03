@@ -41,7 +41,8 @@ const DishType = new GraphQLObjectType({
     chefs: {
       type: ChefType,
       resolve (parent, args) {
-        return Chef.findById(parent.chefsId)
+        console.log(args.chefsId);
+        return Chef.findById("5ed6bab33547050134165208")
       }
     }
   })
