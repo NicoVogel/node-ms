@@ -5,20 +5,50 @@ const kafka = new Kafka({
     brokers: ['kafka:9092']
 })
 
+const requestAmount = 10000;
 const producer = kafka.producer();
+const waitForSeconds = 11;
+
+const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')}]: ${msg}`)
+
+
 
 const run = async () => {
     await producer.connect()
+    console.log('\n\n\n\n');
+    let startTime;
+    log(`**start Sending ${requestAmount} single requests`)
+    startTime = Date.now();
+    const requests = [];
+    for (let index = 0; index <= requestAmount; index++) {
+        requests.push(producer.send({
+            topic: 'logs',
+            messages: [{ value: `${index}: 'Hello World!'` }]
+        }));
+    }
+    await Promise.all(requests);
+    console.log('\n\n\n\n');
+    log(`**done sending after ${Date.now() - startTime}ms`);
+    
+    console.log('\n\n\n\n');
+    log(`**start Sending ${requestAmount} in batches requests`)
+    const messages = [];
+    for (let index = 0; index <= requestAmount; index++) {
+        messages.push({ value: `${index}: 'Hello World!'` })
+    }
     await producer.send({
         topic: 'logs',
-        messages: [
-          { value: 'Hello KafkaJS user!' },
-        ],
-      })
-    console.log('send message')
+        messages,
+    });
+    console.log('\n\n\n\n');
+    log(`**done sending after ${Date.now() - startTime}ms`);
 }
 
-run().catch(e => console.error(`[example/producer] ${e.message}`, e))
+setTimeout(() => run().catch(e => console.error(`[example/producer] ${e.message}`, e)),
+    1000 * waitForSeconds)
+
+
+
 
 
 
