@@ -38,7 +38,7 @@ const run = async () => {
     for (let j = 0; j < batches; j++) {
         let messages = [];
         for (let index = 0; index <= limit; index++) {
-            messages.push({ value: `${index}: 'Hello World!' -2` })
+            messages.push({ value: `${index * j}: 'Hello World!' -2` })
         }
         requests.push(producer.send({
             topic: 'logs',
