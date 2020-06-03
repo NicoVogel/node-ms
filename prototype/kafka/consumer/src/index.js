@@ -36,7 +36,7 @@ const run = async () => {
                 startTime[match[2]] = Date.now();
             } else {
                 if (counter[match[2]] % (requestAmount / 10) == 0) {
-                    log(`consumed [${match[2]}] by ${(counter[match[2]] / requestAmount) * 100}% (index/counter - ${match[1] + 1}/${counter[match[2]]})`)
+                    log(`consumed [${match[2]}] by ${(counter[match[2]] / requestAmount) * 100}% (index/counter - ${match[1]}/${counter[match[2]] - 1})`)
                 }
             }
         },
