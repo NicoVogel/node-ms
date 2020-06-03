@@ -1,0 +1,13 @@
+version: "3.3"
+services: 
+  nginx:
+    build: app
+    ports: 
+      - 80:80
+      - 443:443
+    # volumes: 
+      # - app/dist/app:/app
+    environment: 
+      PORT: 80
+  account:
+    build: account
