@@ -7,6 +7,7 @@ services:
       - 443:443
     environment: 
       PORT: 80
+    #   NODE_ENV: development
   mongodb:
     image: mongo:latest
     ports:
@@ -17,5 +18,7 @@ services:
       MONGO_INITDB_DATABASE: example
   account:
     build: account
-    volumes:
-      - ./account/dist:/app/dist
+    # environment: 
+    #   NODE_ENV: development
+    # volumes:
+    #   - ./account/src:/app/src

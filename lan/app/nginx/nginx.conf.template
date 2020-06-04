@@ -24,15 +24,11 @@ http {
         gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
         gzip_comp_level 7;
 
-        root /app;
+        ${ANGULAR_LOCAL}
 
         index index.html;
 
         location /api/account{
-            # proxy_set_header X-Forwarded-Host $host;
-            # proxy_set_header X-Forwarded-Server $host;
-            # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            
             # https://serverfault.com/questions/379675/nginx-reverse-proxy-url-rewrite
             rewrite /api/account/(.*) /$1  break;
             proxy_pass         http://account:3000;
@@ -40,15 +36,8 @@ http {
             proxy_set_header   Host $host;
         }
 
+        ${REDIRECT_INDEX}
 
-        location / {
-            try_files $uri $uri/ /index.html;
-            expires ${EXPIRES};
-            add_header Cache-Control "public";
-        }
-
-        location = /index.html {
-            expires -1;
-        }
+        ${ANGULAR_FORWARD}
     }
 }
