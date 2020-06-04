@@ -1,5 +1,5 @@
 import * as expressJwt from 'express-jwt';
-import { getById } from './user.service';
+import { getById } from '.';
 import { secret } from '../config/jwt.config';
 import { Request } from 'express';
 
