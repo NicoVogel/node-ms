@@ -5,9 +5,9 @@ const kafka = new Kafka({
     brokers: ['kafka:9092']
 })
 
-const requestAmount = 10;
+const requestAmount = 100000;
 const producer = kafka.producer();
-const waitForSeconds = 15;
+const waitForSeconds = 11;
 
 const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')}]: ${msg}`)
 
@@ -28,7 +28,7 @@ const run = async () => {
         // for (let index = limit; index >= 0; index--) {
         //     messages.push({ value: `${index * j}: 'Hello World!' -batch` })
         // }
-        for (let index = 0; index <= limit; index++) {
+        for (let index = 0; index < limit; index++) {
             messages.push({ value: `${index * j}: 'Hello World!' -batch` })
         }
         await producer.send({

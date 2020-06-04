@@ -8,8 +8,8 @@ const kafka = new Kafka({
 let startTime = {};
 let counter = {};
 const topic = 'logs';
-const waitForSeconds = 20;
-const requestAmount = 10;
+const waitForSeconds = 10;
+const requestAmount = 100000;
 const consumer = kafka.consumer({ groupId: `group${Math.floor(Math.random() * Math.floor(100000))}` });
 const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')}]: ${msg}`)
 
@@ -21,8 +21,6 @@ const run = async () => {
     await consumer.run({
         // autoCommit: false,
         eachMessage: async ({ topic, partition, message }) => {
-
-            log(JSON.stringify({ text: "message", message }));
             const msg = message.value.toString();
             (() => {
                 if (msg.startsWith('end')) {
