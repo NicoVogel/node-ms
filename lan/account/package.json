@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run debug",
+    "start": "if-env NODE_ENV=development && npm run start:prod || npm run debug",
     "start:prod": "node .",
     "predebug": "rimraf dist/*",
     "debug": "tsc-watch --onSuccess \"node --inspect=0.0.0.0:9229 dist/index.js\" --onFailure \"echo WHOOPS! Server compilation failed\"",
