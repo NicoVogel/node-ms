@@ -1,3 +1,7 @@
 #!/bin/bash
 
-docker-compose up --scale consumer=10
+# clear first
+docker-compose down -v
+
+# start
+docker-compose up --build --scale consumer=10

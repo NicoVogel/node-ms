@@ -5,15 +5,16 @@ const kafka = new Kafka({
     brokers: ['kafka:9092']
 })
 
-const requestAmount = 100000;
+const requestAmount = 10;
 const producer = kafka.producer();
-const waitForSeconds = 11;
+const waitForSeconds = 15;
 
 const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')}]: ${msg}`)
 
 
 
 const run = async () => {
+    log('connect')
     await producer.connect()
     let startTime;
     let requests = [];
@@ -64,6 +65,7 @@ const run = async () => {
 
 }
 
+log(`wait for ${1000 * waitForSeconds}ms`)
 setTimeout(() => run().catch(e => console.error(`[example/producer] ${e.message}`, e)),
     1000 * waitForSeconds)
 
