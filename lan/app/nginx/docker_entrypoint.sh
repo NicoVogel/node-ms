@@ -12,7 +12,7 @@ EOM
 else
   read -r -d '' ANGULAR_FORWARD << EOM
 location /{
-            proxy_pass         http://host.docker.internal:4200;
+            proxy_pass         http://172.17.0.1:4200;
             proxy_redirect     off;
             proxy_set_header   Host \$host;
         }
