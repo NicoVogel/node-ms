@@ -1,4 +1,5 @@
 import * as mongo from 'mongoose';
+import { JSONOptions } from '../config/db.config';
 
 export interface IUser extends mongo.Document {
   name: string;
@@ -12,14 +13,7 @@ export const userSchema = new mongo.Schema({
   createdDate: { type: Date, default: Date.now }
 });
 
-userSchema.set('toJSON', {
-  virtuals: true,
-  versionKey: false,
-  transform: function (doc, ret) {
-    delete ret._id;
-    delete ret.passwordHash;
-  }
-});
+userSchema.set('toJSON', JSONOptions);
 
 const User = mongo.model<IUser>('User', userSchema);
 export default User;
