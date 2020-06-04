@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose up --scale consumer=10
+docker-compose up --build --scale consumer=10

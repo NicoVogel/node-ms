@@ -1,6 +1,6 @@
 const CONN_URL = 'amqp://rabbitmq';
 const exchangeName = 'logs';
-const waitForSeconds = 10;
+const waitForSeconds = 20;
 
 const requestCount = 100000;
 let closeConnection = null;
