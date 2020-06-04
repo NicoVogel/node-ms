@@ -2,6 +2,8 @@ import * as expressJwt from 'express-jwt';
 import { getById } from '.';
 import { secret } from '../config/jwt.config';
 import { Request } from 'express';
+import * as db from '../models';
+
 
 export const jwt: any = () => {
   const options: any = { secret, isRevoked };
@@ -17,10 +19,10 @@ export const jwt: any = () => {
 }
 
 async function isRevoked(req: Request, payload: any, done: any) {
-  const user = await getById(payload.sub);
-
   // revoke token if user no longer exists
-  if (!user) {
+  if (!await getById(db.default.User, payload.sub)) {
+    return done(null, true);
+  } else if (!await getById(db.default.Team, payload.sub)) {
     return done(null, true);
   }
 
