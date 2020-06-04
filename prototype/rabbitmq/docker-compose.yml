@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        ports:
+            - 5672:5672
+            - 15672:15672
+    consumer:
+        build: consumer
+        depends_on: 
+            - rabbitmq
+    producer:
+        build: producer
+        depends_on: 
+            - consumer
+            - rabbitmq
