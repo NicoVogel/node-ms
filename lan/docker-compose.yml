@@ -20,5 +20,5 @@ services:
     build: account
     environment: 
       NODE_ENV: development
-      volumes:
-       - ./account/src:/app/src
+    volumes:
+      - ./account/src:/app/src
