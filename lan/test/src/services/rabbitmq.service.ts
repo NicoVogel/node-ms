@@ -26,8 +26,6 @@ export class EventAdapter {
     }
 
     public subscribe(key: string): Subject<any> {
-
-
         const mainTopic = this.getMainTopic(key);
         this.checkIfMainTopicExists(mainTopic);
 
@@ -36,9 +34,9 @@ export class EventAdapter {
             return subject;
         }
         // const queue = this.connection.declareQueue(uuidv4());
-        const queue = this.connection.declareQueue("");
+        const queue = this.connection.declareQueue("", { durable: false });
         const exchange = this.mainExchanges[mainTopic];
-        queue.bind(exchange, key, { durable: false })
+        queue.bind(exchange, key)
 
         const newSubject = new Subject<any>();
         queue.activateConsumer((message) => {
