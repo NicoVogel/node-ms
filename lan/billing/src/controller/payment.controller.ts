@@ -14,7 +14,20 @@ export function requestPayment(req: Request, res: Response) {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || 'Error',
+          err.message || 'Error in requesting Payment',
       });
     })
+}
+
+export function getAll(req: Request, res: Response) {
+  Payment.find()
+    .then(data => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Error in retrieving all Payments',
+      });
+    });
 }

@@ -5,5 +5,5 @@ const PaymentRouter = express.Router();
 PaymentRouter.post('/request', PaymentController.requestPayment);
 // PaymentRouter.get('/:id', PaymentController.getById);
 // PaymentRouter.put('/:id', PaymentController.update);
-// PaymentRouter.get('/', PaymentController.getAll);
+PaymentRouter.get('/', PaymentController.getAll);
 export default PaymentRouter;
