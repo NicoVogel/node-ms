@@ -1,16 +1,16 @@
 import * as Amqp from 'amqp-ts';
 import { v4 as uuidv4 } from 'uuid';
-import { Observable } from 'rxjs'
+import { Subject } from 'rxjs'
 import { rabbitmqURL, mainTopics } from '../config/rabbitmq.config';
 
-const keyRegex = /^(\w)+.[\w|.]+/;
+const keyRegex = /^(\w+).[\w|.]+$/;
 
 export class EventAdapter {
     private mainExchanges: {
         [name: string]: Amqp.Exchange
     } = {};
     private connection: Amqp.Connection;
-    private queueNames: Map<string, Observable<any>>;
+    private queueNames: Map<string, Subject<any>>;
     private publishinQueue: { mainTopic: string, key: string, message: Amqp.Message }[] = [];
     private readyForPublish: boolean = false;
     constructor() {
@@ -19,43 +19,34 @@ export class EventAdapter {
             this.mainExchanges[topic] = this.connection.declareExchange(topic, 'topic', { durable: false });
         });
         this.queueNames = new Map();
-        this.connection.completeConfiguration().then(() => {
-            this.readyForPublish = true;
-            this.publishinQueue.forEach(publish => {
-                if (this.mainTopics.includes(publish.mainTopic) === false) {
-                    console.error(`queued publishing message could not be send, because the given main topic does not exist. provided main topic '${publish.mainTopic}' and key '${publish.key}'`);
-                    return;
-                }
-                this.mainExchanges[publish.mainTopic].send(publish.message, publish.key);
-            })
-        })
     }
 
     public get mainTopics(): string[] {
         return [...mainTopics];
     }
 
-    public subscribe(key: string): Observable<any> {
+    public subscribe(key: string): Subject<any> {
+
 
         const mainTopic = this.getMainTopic(key);
         this.checkIfMainTopicExists(mainTopic);
 
-        let observable = this.queueNames.get(key);
-        if (observable !== undefined) {
-            return observable;
+        let subject = this.queueNames.get(key);
+        if (subject !== undefined) {
+            return subject;
         }
+        // const queue = this.connection.declareQueue(uuidv4());
+        const queue = this.connection.declareQueue("");
+        const exchange = this.mainExchanges[mainTopic];
+        queue.bind(exchange, key, { durable: false })
 
-        const queue = this.connection.declareQueue(uuidv4(), { durable: false });
-        queue.bind(this.mainExchanges[mainTopic], key);
-
-        observable = new Observable<any>(observer => {
-            queue.activateConsumer((message) => {
-                observer.next(message.getContent());
-                message.ack();
-            })
-        });
-        this.queueNames.set(key, observable);
-        return observable;
+        const newSubject = new Subject<any>();
+        queue.activateConsumer((message) => {
+            newSubject.next(message.getContent());
+            message.ack();
+        })
+        this.queueNames.set(key, newSubject);
+        return newSubject;
     }
 
     public publish(key: string, data: any): void {
@@ -68,6 +59,20 @@ export class EventAdapter {
         } else {
             this.publishinQueue.push({ key, mainTopic, message });
         }
+    }
+
+    public active() {
+        this.connection.completeConfiguration().then(() => {
+            console.log('completeConfiguration')
+            this.readyForPublish = true;
+            this.publishinQueue.forEach(publish => {
+                if (this.mainTopics.includes(publish.mainTopic) === false) {
+                    console.error(`queued publishing message could not be send, because the given main topic does not exist. provided main topic '${publish.mainTopic}' and key '${publish.key}'`);
+                    return;
+                }
+                this.mainExchanges[publish.mainTopic].send(publish.message, publish.key);
+            })
+        })
     }
 
     private getMainTopic(key: string): string {
