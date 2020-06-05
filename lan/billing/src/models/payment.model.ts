@@ -7,18 +7,24 @@ export enum paymentState {
 }
 
 export interface IPayment extends mongo.Document {
-  userId: string;
-  amount: number;
-  purposeId: String
+  _id: Object;
   transactionDate: Date;
+  state: String;
+  cart: Object[];
 }
 
 export const paymentSchema = new mongo.Schema({
-  userId: { type: String, required: true },
-  amount: { type: Number, required: true },
-  purposeId: { type: String, required: true },
-  state: { type: String },
-  transactionDate: { type: Date, default: Date.now }
+  _id: {
+    accountId: { type: String, required: true },
+    eventId: { type: String, required: true },
+  },
+  transactionDate: { type: Date, default: Date.now },
+  state: String,
+  cart: [{
+    sourceId: String,
+    purpose: String,
+    amount: Number
+  }]
 })
 
 paymentSchema.set('toJSON', JSONOptions);
