@@ -31,3 +31,17 @@ export function getAll(req: Request, res: Response) {
       });
     });
 }
+export function getById(req: Request, res: Response) {
+  const { id } = req.params;
+  Payment.find()
+    .then(data => {
+      if (!data) res.status(404).send({ message: `No Payment found with id ${id}` });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Error in retrieving payment',
+      });
+    });
+}
