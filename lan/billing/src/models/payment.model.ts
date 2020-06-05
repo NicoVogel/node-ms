@@ -14,7 +14,7 @@ export interface IPayment extends mongo.Document {
 }
 
 export const paymentSchema = new mongo.Schema({
-  name: { type: String, required: true },
+  userId: { type: String, required: true },
   amount: { type: Number, required: true },
   purposeId: { type: String, required: true },
   state: { type: String },
