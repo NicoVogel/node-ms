@@ -1,14 +1,14 @@
-<nav ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills">
+<nav ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
   <ng-container ngbNavItem>
     <a ngbNavLink routerLink="/home" routerLinkActive="active">Home</a>
   </ng-container>
-  <ng-container ngbNavItem>
+  <ng-container ngbNavItem [disabled]=true>
     <a ngbNavLink routerLink="/test" routerLinkActive="active">Test</a>
   </ng-container>
   <ng-container ngbNavItem>
     <a ngbNavLink routerLink="/about" routerLinkActive="active">About</a>
   </ng-container>
-  <ng-container ngbNavItem>
+  <ng-container *ngIf="currentUser" ngbNavItem>
     <a ngbNavLink (click)="logout()">Logout</a>
   </ng-container>
 </nav>
