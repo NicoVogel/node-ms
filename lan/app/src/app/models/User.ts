@@ -3,4 +3,5 @@ export class User {
   name: string;
   password: string;
   token?: string;
+  members?: string[];
 }

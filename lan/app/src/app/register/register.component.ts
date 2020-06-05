@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(registrationData): void {
-    this.authenticationService.register(registrationData.type, registrationData.name, registrationData.password)
+    this.authenticationService.register(registrationData.type, registrationData.name, registrationData.password, registrationData.members)
       .pipe(first())
       .subscribe(
         data => { this.router.navigate(["/"]); },

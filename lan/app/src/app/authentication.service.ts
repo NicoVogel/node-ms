@@ -35,8 +35,8 @@ export class AuthenticationService {
     this.currentUserSubject.next(null);
   }
 
-  register(type: string, name: string, password: string) {
-    return this.http.post<any>(`${accountServiceURL}/${type}/register`, { name, password }).pipe(map(() => {
+  register(type: string, name: string, password: string, members?: string[]) {
+    return this.http.post<any>(`${accountServiceURL}/${type}/register`, { name, password, members }).pipe(map(() => {
       return this.login(type, name, password);
     }))
   }
