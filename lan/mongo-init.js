@@ -10,3 +10,14 @@ db.createUser({
     { role: "readWrite", db: "node-ms-account" }
   ]
 });
+
+db = db.getSiblingDB('node-ms-billing')
+db.createUser({
+  user: "billing",
+  pwd: "billing",
+  roles: [
+    { role: "dbAdmin", db: "node-ms-billing" },
+    { role: "userAdmin", db: "node-ms-billing" },
+    { role: "readWrite", db: "node-ms-billing" }
+  ]
+});
