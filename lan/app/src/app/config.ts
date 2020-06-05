@@ -1,0 +1,1 @@
+export const accountServiceURL = "http://bw.vietdo.me/api/account"
