@@ -24,6 +24,7 @@ q2.activateConsumer((message) => {
 });
 q3.activateConsumer((message) => {
   console.log('Message received q3: ' + message.getContent());
+  message.ack();
 });
 
 
@@ -31,5 +32,5 @@ connection.completeConfiguration().then(() => {
   // the following message will be received because
   // everything you defined earlier for this connection now exists
   const msg2 = new Amqp.Message('hi');
-  accountExchange.send(msg2, 'account.register');
+  // accountExchange.send(msg2, 'account.register');
 });
