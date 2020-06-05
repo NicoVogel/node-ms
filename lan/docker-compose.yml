@@ -24,3 +24,9 @@ services:
       NODE_ENV: development
     volumes:
       - ./account/src:/app/src
+  billing:
+    build: billing
+    environment: 
+      NODE_ENV: development
+    volumes:
+      - ./billing/src:/app/src
