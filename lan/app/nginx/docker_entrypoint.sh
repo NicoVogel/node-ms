@@ -13,8 +13,12 @@ else
   read -r -d '' ANGULAR_FORWARD << EOM
 location /{
             proxy_pass         http://172.17.0.1:4200;
+            proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
             proxy_redirect     off;
             proxy_set_header   Host \$host;
+            proxy_http_version 1.1;
+            proxy_set_header   Upgrade \$http_upgrade;
+            proxy_set_header   Connection "Upgrade";
         }
 EOM
   export ANGULAR_FORWARD
