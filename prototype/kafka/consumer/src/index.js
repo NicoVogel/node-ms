@@ -5,13 +5,12 @@ const kafka = new Kafka({
     brokers: ['kafka:9092']
 });
 
-let startTime = {};
-let counter = {};
+const container = {};
 const topic = 'logs';
 const waitForSeconds = 10;
-const requestAmount = 100000;
+const requestAmount = 10000;
 const consumer = kafka.consumer({ groupId: `group${Math.floor(Math.random() * Math.floor(100000))}` });
-const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')}]: ${msg}`)
+const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ')}]: ${msg}`)
 
 const run = async () => {
     log('connect')
@@ -22,27 +21,29 @@ const run = async () => {
         // autoCommit: false,
         eachMessage: async ({ topic, partition, message }) => {
             const msg = message.value.toString();
-            (() => {
-                if (msg.startsWith('end')) {
-                    const match = msg.match(/.*\-(\w+)/);
-                    log(`done after with [${match[1]}]: ${Date.now() - startTime[match[1]]}ms`);
-                    return;
-                }
-
+            if (msg.startsWith('end')) {
+                const match = msg.match(/.*\-(\w+)/);
+                const config = match[1];
+                const metaData = container[config];
+                log(`done with [${config}] after ${Date.now() - metaData.startTime}ms and total match count is ${metaData.matches}/${requestAmount}`);
+            } else {
                 const match = msg.match(/(\d+):.*\-(\w+)/);
-                if (!counter[match[2]]) {
-                    counter[match[2]] = 0;
-                }
-                counter[match[2]]++;
+                const index = match[1];
+                const config = match[2];
 
-                if (!startTime[match[2]]) {
-                    startTime[match[2]] = Date.now();
-                } else {
-                    if (counter[match[2]] % (requestAmount / 10) == 0) {
-                        log(`consumed [${match[2]}] by ${(counter[match[2]] / requestAmount) * 100}% (index/counter - ${match[1]}/${counter[match[2]] - 1})`)
+                if (container[config] === undefined) {
+                    container[config] = {
+                        index: -1,
+                        startTime: Date.now(),
+                        matches: 0
                     }
                 }
-            })()
+                const metaData = container[config];
+                metaData.index++;
+                if (index == metaData.index) {
+                    metaData.matches++;
+                }
+            }
             consumer.commitOffsets([{ topic, partition, offset: message.offset }])
         },
     })

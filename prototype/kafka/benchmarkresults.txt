@@ -1,0 +1,82 @@
+producer_1   | [2020-06-05 08:36:39]: start Sending with batchAwait
+producer_1   | [2020-06-05 08:36:41]: done with batchAwait after 1794ms
+consumer_5   | [2020-06-05 08:36:57.520Z]: done with [batchAwait] after 17798ms and total match count is 1/10000
+consumer_7   | [2020-06-05 08:37:00.293Z]: done with [batchAwait] after 20538ms and total match count is 1/10000
+consumer_6   | [2020-06-05 08:37:00.430Z]: done with [batchAwait] after 20723ms and total match count is 1/10000
+consumer_10  | [2020-06-05 08:37:02.360Z]: done with [batchAwait] after 22731ms and total match count is 1/10000
+consumer_1   | [2020-06-05 08:37:03.531Z]: done with [batchAwait] after 23841ms and total match count is 1/10000
+consumer_8   | [2020-06-05 08:37:04.077Z]: done with [batchAwait] after 24380ms and total match count is 1/10000
+consumer_9   | [2020-06-05 08:37:05.378Z]: done with [batchAwait] after 25679ms and total match count is 1/10000
+consumer_3   | [2020-06-05 08:37:06.012Z]: done with [batchAwait] after 26221ms and total match count is 1/10000
+consumer_4   | [2020-06-05 08:37:06.547Z]: done with [batchAwait] after 26762ms and total match count is 1/10000
+consumer_2   | [2020-06-05 08:37:09.415Z]: done with [batchAwait] after 29731ms and total match count is 1/10000
+
+
+producer_1   | [2020-06-05 08:37:41]: start Sending with batchAwaitAll
+producer_1   | [2020-06-05 08:37:41]: done with batchAwaitAll after 798ms
+consumer_10  | [2020-06-05 08:37:51.536Z]: done with [batchAwaitAll] after 10155ms and total match count is 1/10000
+consumer_9   | [2020-06-05 08:37:54.599Z]: done with [batchAwaitAll] after 13197ms and total match count is 1/10000
+consumer_7   | [2020-06-05 08:37:57.232Z]: done with [batchAwaitAll] after 15865ms and total match count is 1/10000
+consumer_2   | [2020-06-05 08:37:58.585Z]: done with [batchAwaitAll] after 17163ms and total match count is 1/10000
+consumer_6   | [2020-06-05 08:38:01.269Z]: done with [batchAwaitAll] after 19909ms and total match count is 1/10000
+consumer_5   | [2020-06-05 08:38:03.515Z]: done with [batchAwaitAll] after 22078ms and total match count is 1/10000
+consumer_8   | [2020-06-05 08:38:03.867Z]: done with [batchAwaitAll] after 22499ms and total match count is 1/10000
+consumer_1   | [2020-06-05 08:38:06.379Z]: done with [batchAwaitAll] after 24886ms and total match count is 1/10000
+consumer_4   | [2020-06-05 08:38:06.966Z]: done with [batchAwaitAll] after 25577ms and total match count is 1/10000
+consumer_3   | [2020-06-05 08:38:07.725Z]: done with [batchAwaitAll] after 26270ms and total match count is 1/10000
+
+
+producer_1   | [2020-06-05 08:38:41]: start Sending with singleAwait
+producer_1   | [2020-06-05 08:39:24]: done with singleAwait after 42727ms
+consumer_1   | [2020-06-05 08:39:24.717Z]: done with [singleAwait] after 42725ms and total match count is 10000/10000
+consumer_9   | [2020-06-05 08:39:24.721Z]: done with [singleAwait] after 42727ms and total match count is 10000/10000
+consumer_8   | [2020-06-05 08:39:24.721Z]: done with [singleAwait] after 42718ms and total match count is 10000/10000
+consumer_2   | [2020-06-05 08:39:24.724Z]: done with [singleAwait] after 42724ms and total match count is 10000/10000
+consumer_4   | [2020-06-05 08:39:24.729Z]: done with [singleAwait] after 42734ms and total match count is 10000/10000
+consumer_6   | [2020-06-05 08:39:24.732Z]: done with [singleAwait] after 42734ms and total match count is 10000/10000
+consumer_7   | [2020-06-05 08:39:24.735Z]: done with [singleAwait] after 42745ms and total match count is 10000/10000
+consumer_10  | [2020-06-05 08:39:24.740Z]: done with [singleAwait] after 42747ms and total match count is 10000/10000
+consumer_5   | [2020-06-05 08:39:24.741Z]: done with [singleAwait] after 42749ms and total match count is 10000/10000
+consumer_3   | [2020-06-05 08:39:24.751Z]: done with [singleAwait] after 42755ms and total match count is 10000/10000
+producer_1   | [2020-06-05 08:40:24]: start Sending with singleAwaitAll
+consumer_1   | [2020-06-05 08:40:49.148Z]: done with [singleAwaitAll] after 22378ms and total match count is 10000/10000
+consumer_8   | [2020-06-05 08:40:49.151Z]: done with [singleAwaitAll] after 22385ms and total match count is 10000/10000
+
+
+producer_1   | [2020-06-05 08:40:49]: done with singleAwaitAll after 24396ms
+consumer_5   | [2020-06-05 08:40:49.162Z]: done with [singleAwaitAll] after 22394ms and total match count is 10000/10000
+consumer_3   | [2020-06-05 08:40:49.166Z]: done with [singleAwaitAll] after 22397ms and total match count is 10000/10000
+consumer_6   | [2020-06-05 08:40:49.172Z]: done with [singleAwaitAll] after 22406ms and total match count is 10000/10000
+consumer_9   | [2020-06-05 08:40:49.185Z]: done with [singleAwaitAll] after 22398ms and total match count is 10000/10000
+consumer_4   | [2020-06-05 08:40:49.193Z]: done with [singleAwaitAll] after 22418ms and total match count is 10000/10000
+consumer_7   | [2020-06-05 08:40:49.204Z]: done with [singleAwaitAll] after 22437ms and total match count is 10000/10000
+consumer_2   | [2020-06-05 08:40:49.223Z]: done with [singleAwaitAll] after 22454ms and total match count is 10000/10000
+consumer_10  | [2020-06-05 08:40:49.308Z]: done with [singleAwaitAll] after 22541ms and total match count is 10000/10000
+
+
+producer_1   | [2020-06-05 08:41:49]: start Sending with batchNoAwait
+producer_1   | [2020-06-05 08:41:50]: done with batchNoAwait after 838ms
+consumer_3   | [2020-06-05 08:41:53.732Z]: done with [batchNoAwait] after 4378ms and total match count is 1/10000
+consumer_2   | [2020-06-05 08:41:53.771Z]: done with [batchNoAwait] after 4385ms and total match count is 1/10000
+consumer_1   | [2020-06-05 08:41:55.081Z]: done with [batchNoAwait] after 5762ms and total match count is 1/10000
+consumer_10  | [2020-06-05 08:41:55.494Z]: done with [batchNoAwait] after 6205ms and total match count is 1/10000
+consumer_5   | [2020-06-05 08:41:55.723Z]: done with [batchNoAwait] after 6408ms and total match count is 1/10000
+consumer_7   | [2020-06-05 08:41:56.877Z]: done with [batchNoAwait] after 7563ms and total match count is 1/10000
+consumer_6   | [2020-06-05 08:41:57.376Z]: done with [batchNoAwait] after 8075ms and total match count is 1/10000
+consumer_8   | [2020-06-05 08:41:57.859Z]: done with [batchNoAwait] after 8552ms and total match count is 1/10000
+consumer_9   | [2020-06-05 08:41:59.812Z]: done with [batchNoAwait] after 10520ms and total match count is 1/10000
+consumer_4   | [2020-06-05 08:42:00.310Z]: done with [batchNoAwait] after 11017ms and total match count is 1/10000
+
+
+producer_1   | [2020-06-05 08:42:50]: start Sending with singleNoAwait
+producer_1   | [2020-06-05 08:43:11]: done with singleNoAwait after 21600ms
+consumer_8   | [2020-06-05 08:43:11.670Z]: done with [singleNoAwait] after 21596ms and total match count is 10000/10000
+consumer_4   | [2020-06-05 08:43:11.702Z]: done with [singleNoAwait] after 21628ms and total match count is 10000/10000
+consumer_6   | [2020-06-05 08:43:11.706Z]: done with [singleNoAwait] after 21631ms and total match count is 10000/10000
+consumer_7   | [2020-06-05 08:43:11.719Z]: done with [singleNoAwait] after 21648ms and total match count is 10000/10000
+consumer_9   | [2020-06-05 08:43:11.731Z]: done with [singleNoAwait] after 21660ms and total match count is 10000/10000
+consumer_1   | [2020-06-05 08:43:11.763Z]: done with [singleNoAwait] after 21689ms and total match count is 10000/10000
+consumer_5   | [2020-06-05 08:43:11.804Z]: done with [singleNoAwait] after 21732ms and total match count is 10000/10000
+consumer_3   | [2020-06-05 08:43:11.888Z]: done with [singleNoAwait] after 21816ms and total match count is 10000/10000
+consumer_10  | [2020-06-05 08:43:11.900Z]: done with [singleNoAwait] after 21829ms and total match count is 10000/10000
+consumer_2   | [2020-06-05 08:43:11.963Z]: done with [singleNoAwait] after 21892ms and total match count is 10000/10000

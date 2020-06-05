@@ -5,67 +5,128 @@ const kafka = new Kafka({
     brokers: ['kafka:9092']
 })
 
-const requestAmount = 100000;
+const requestAmount = 10000;
 const producer = kafka.producer();
 const waitForSeconds = 11;
 
 const log = (msg) => console.log(`[${new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')}]: ${msg}`)
 
+const sendAwaitOptional = async (useAwait, producer, send) => {
+    if (useAwait) {
+        await producer.send(send);
+    } else {
+        producer.send(send);
+    }
+}
+
+const introOutroWrap = async (useAwait, config, func) => {
+    log(`start Sending with ${config}`)
+    const startTime = Date.now();
+
+    try {
+        await func(useAwait);
+        await producer.send({
+            topic: 'logs',
+            messages: [{ value: `end-${config}` }],
+        })
+    } catch (error) {
+        log('error: ' + error.message)
+    }
+
+    log(`done with ${config} after ${Date.now() - startTime}ms`);
+}
 
 
-const run = async () => {
-    log('connect')
-    await producer.connect()
-    let startTime;
-    let requests = [];
+const singleRun = async (useAwait, config) => await introOutroWrap(useAwait, config, async (useAwait) => {
+    for (let index = 0; index < requestAmount; index++) {
+        await sendAwaitOptional(useAwait, producer, {
+            topic: 'logs',
+            messages: [{ value: `${index}: 'Hello World!' -${config}` }]
+        });
+    }
+})
 
-    log(`**start Sending ${requestAmount} in batches requests`)
-    startTime = Date.now();
+const singleRunAwaitAll = async (config) => await introOutroWrap(true, config, async (useAwait) => {
+    const requests = [];
+    for (let index = 0; index < requestAmount; index++) {
+        requests.push(sendAwaitOptional(useAwait, producer, {
+            topic: 'logs',
+            messages: [{ value: `${index}: 'Hello World!' -${config}` }]
+        }));
+    }
+    await Promise.all(requests);
+});
+
+
+
+const batchRun = async (useAwait, config) => await introOutroWrap(useAwait, config, async (useAwait) => {
     const batches = 10;
     const limit = requestAmount / batches;
     for (let j = 0; j < batches; j++) {
         let messages = [];
-        // for (let index = limit; index >= 0; index--) {
-        //     messages.push({ value: `${index * j}: 'Hello World!' -batch` })
-        // }
         for (let index = 0; index < limit; index++) {
-            messages.push({ value: `${index * j}: 'Hello World!' -batch` })
+            messages.push({ value: `${index * j}: 'Hello World!' -${config}` })
         }
-        await producer.send({
+        await sendAwaitOptional(useAwait, producer, {
             topic: 'logs',
             messages,
         });
-        log(`progress: ${j * 10}%`)
     }
-    await producer.send({
-        topic: 'logs',
-        messages: [{ value: 'end-batch' }],
-    })
-    // await Promise.all(requests);
-    log(`**done sending after ${Date.now() - startTime}ms`);
+});
 
 
-    log(`**start Sending ${requestAmount} single requests`)
-    startTime = Date.now();
-    for (let index = 0; index <= requestAmount; index++) {
-        await requests.push(producer.send({
-            topic: 'logs',
-            messages: [{ value: `${index}: 'Hello World!' -single` }]
-        }));
-        if (index % (requestAmount / 10) === 0) {
-            log(`progress: ${(index / requestAmount) * 100}%`)
+const batchRunAwaitAll = async (config) => await introOutroWrap(true, config, async (useAwait) => {
+    const batches = 10;
+    const limit = requestAmount / batches;
+    const requests = [];
+    for (let j = 0; j < batches; j++) {
+        let messages = [];
+        for (let index = 0; index < limit; index++) {
+            messages.push({ value: `${index * j}: 'Hello World!' -${config}` })
         }
+        requests.push(sendAwaitOptional(useAwait, producer, {
+            topic: 'logs',
+            messages,
+        }));
     }
-    await producer.send({
-        topic: 'logs',
-        messages: [{ value: 'end-single' }],
-    })
-    // await Promise.all(requests);
-    log(`**done sending after ${Date.now() - startTime}ms`);
+    await Promise.all(requests);
+});
 
+const run = async () => {
+    log('connect')
+    await producer.connect()
+
+    const waitBetweenCalls = 60 * 1000;
+    await batchRun(true, "batchAwait");
+    setTimeout(async () => {
+        await batchRunAwaitAll("batchAwaitAll");
+
+        setTimeout(async () => {
+            await singleRun(true, "singleAwait");
+
+            setTimeout(async () => {
+                await singleRunAwaitAll("singleAwaitAll");
+
+                setTimeout(async () => {
+                    await batchRun(false, "batchNoAwait");
+
+                    setTimeout(async () => {
+                        await singleRun(false, "singleNoAwait");
+                    }, waitBetweenCalls);
+                }, waitBetweenCalls);
+            }, waitBetweenCalls);
+        }, waitBetweenCalls);
+    }, waitBetweenCalls);
 }
+// const run = async () => {
+//     log('connect')
+//     await producer.connect()
 
-log(`wait for ${1000 * waitForSeconds}ms`)
+//     await singleRun(true, "singleAwait");
+//     await batchRun(true, "batchAwait");
+
+// }
+
 setTimeout(() => run().catch(e => console.error(`[example/producer] ${e.message}`, e)),
     1000 * waitForSeconds)
 
