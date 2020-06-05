@@ -35,7 +35,6 @@ export class RegisterComponent implements OnInit {
 
   addTeamMember() {
     this.members.push(this.formBuilder.control(''));
-    console.log(this.registrationForm.value['type'])
   }
   removeTeamMember() {
     this.members.removeAt(this.members.length - 1);

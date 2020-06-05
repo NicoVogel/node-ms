@@ -24,7 +24,7 @@
         placeholder="Password" required>
     </div>
 
-    <div formArrayName="members" class="form-group" *ngIf="registrationForm.value['type']==='team'">
+    <div formArrayName="members" class="form-group" *ngIf="registrationForm.value['type']==='teams'">
       <h3>Team Members</h3>
       <label class="btn btn-light" (click)="addTeamMember()">Add team
         members</label>
@@ -37,8 +37,8 @@
       </div>
     </div>
 
-    <button type="reset" class="btn btn-danger" (click)="registrationForm.reset()">Reset</button>
     <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Submit</button>
+    <button type="reset" class="btn btn-danger" (click)="registrationForm.reset()">Reset</button>
 
     <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
       {{error}}
