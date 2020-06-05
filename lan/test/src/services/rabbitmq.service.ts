@@ -33,8 +33,7 @@ export class EventAdapter {
         if (subject !== undefined) {
             return subject;
         }
-        // const queue = this.connection.declareQueue(uuidv4());
-        const queue = this.connection.declareQueue("", { durable: false });
+        const queue = this.connection.declareQueue(uuidv4(), { durable: false });
         const exchange = this.mainExchanges[mainTopic];
         queue.bind(exchange, key)
 
@@ -61,7 +60,6 @@ export class EventAdapter {
 
     public active() {
         this.connection.completeConfiguration().then(() => {
-            console.log('completeConfiguration')
             this.readyForPublish = true;
             this.publishinQueue.forEach(publish => {
                 if (this.mainTopics.includes(publish.mainTopic) === false) {
