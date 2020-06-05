@@ -11,6 +11,5 @@ export const JSONOptions: DocumentToObjectOptions = {
   versionKey: false,
   transform: function (doc: any, ret: any) {
     delete ret._id;
-    delete ret.passwordHash;
   }
 };
