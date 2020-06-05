@@ -1,0 +1,49 @@
+{
+  "name": "event",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=development && npm run debug || npm run start:prod",
+    "start:prod": "node .",
+    "predebug": "rimraf dist/*",
+    "debug": "tsc-watch --onSuccess \"node --inspect=0.0.0.0:9229 dist/index.js\" --onFailure \"echo WHOOPS! Server compilation failed\"",
+    "build": "tsc -b tsconfig.json",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/**/*",
+    "test": "mocha --require ts-node/register --extensions ts 'test/**/*.test.ts'",
+    "test:watch": "npm run test -- --watch --watch-files ./src/**/*.ts --watch-files ./test/**/*.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/amqplib": "^0.5.13",
+    "@types/assert": "^1.4.6",
+    "@types/express": "^4.17.6",
+    "@types/mocha": "^7.0.2",
+    "@types/mongoose": "^5.7.22",
+    "@types/node": "^13.13.2",
+    "@types/uuid": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "assert": "^2.0.0",
+    "eslint": "^6.8.0",
+    "if-env": "^1.0.4",
+    "mocha": "^7.1.1",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^7.0.5",
+    "ts-node": "^8.9.0",
+    "tsc-watch": "^4.2.8",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.6",
+    "amqp-ts": "^1.8.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.17",
+    "rxjs": "^6.5.5",
+    "uuid": "^8.1.0"
+  }
+}

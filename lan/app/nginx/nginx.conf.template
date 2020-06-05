@@ -43,6 +43,13 @@ http {
             proxy_set_header   Host $host;
         }
 
+        location /api/event{
+            rewrite /api/event/(.*) /$1  break;
+            proxy_pass         http://event:3000;
+            proxy_redirect     off;
+            proxy_set_header   Host $host;
+        }
+
         ${REDIRECT_INDEX}
 
         ${ANGULAR_FORWARD}

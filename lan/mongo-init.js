@@ -21,3 +21,14 @@ db.createUser({
     { role: "readWrite", db: "node-ms-billing" }
   ]
 });
+
+db = db.getSiblingDB('node-ms-event')
+db.createUser({
+  user: "event",
+  pwd: "event",
+  roles: [
+    { role: "dbAdmin", db: "node-ms-event" },
+    { role: "userAdmin", db: "node-ms-event" },
+    { role: "readWrite", db: "node-ms-event" }
+  ]
+});

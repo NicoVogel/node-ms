@@ -35,10 +35,10 @@ services:
       NODE_ENV: development
     volumes:
       - ./billing/src:/app/src
-  test:
-    build: test
+  event:
+    build: event
     environment: 
       NODE_ENV: development
     volumes:
-      - ./test/src:/app/src
+      - ./event/src:/app/src
 
