@@ -1,27 +1,15 @@
 <nav ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills">
   <ng-container ngbNavItem>
     <a ngbNavLink routerLink="/home" routerLinkActive="active">Home</a>
-    <ng-template ngbNavContent>
-      <p>aa</p>
-    </ng-template>
   </ng-container>
   <ng-container ngbNavItem>
     <a ngbNavLink routerLink="/" routerLinkActive="active">Test</a>
-    <ng-template ngbNavContent>
-      <p>bb</p>
-    </ng-template>
   </ng-container>
   <ng-container ngbNavItem>
     <a ngbNavLink routerLink="/about" routerLinkActive="active">About</a>
-    <ng-template ngbNavContent>
-      <p>cc</p>
-    </ng-template>
   </ng-container>
   <ng-container ngbNavItem>
     <a ngbNavLink (click)="logout()">Logout</a>
-    <ng-template ngbNavContent>
-      <p>cc</p>
-    </ng-template>
   </ng-container>
 </nav>
 
