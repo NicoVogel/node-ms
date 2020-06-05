@@ -1,6 +1,6 @@
 <div id="login">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
-
+    <h1>Login</h1>
     <div class="form-group">
       <input type="text" class="form-control" id="inlineFormInputGroup" formControlName="name" placeholder="Name"
         required>
@@ -11,8 +11,12 @@
         placeholder="Password" required>
     </div>
 
-    <button type="reset" class="btn btn-danger" (click)="loginForm.reset()">Reset</button>
-    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
+    <div>
+      <button type="reset" class="btn btn-danger" (click)="loginForm.reset()">Reset</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
+      <button type="button" class="btn btn-link" [routerLink]="'/register'">Register</button>
+    </div>
+
     <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
       {{error}}
     </div>

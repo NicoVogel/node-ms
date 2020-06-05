@@ -1,7 +1,7 @@
 <div id="register">
 
-
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+    <h1>Registration</h1>
     <p>Are you a team or do you play alone?</p>
     <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="type">
       <label class="btn-primary" ngbButtonLabel>
