@@ -36,6 +36,13 @@ http {
             proxy_set_header   Host $host;
         }
 
+        location /api/billing{
+            rewrite /api/billing/(.*) /$1  break;
+            proxy_pass         http://billing:3000;
+            proxy_redirect     off;
+            proxy_set_header   Host $host;
+        }
+
         ${REDIRECT_INDEX}
 
         ${ANGULAR_FORWARD}
