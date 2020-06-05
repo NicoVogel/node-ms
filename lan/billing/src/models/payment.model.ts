@@ -1,16 +1,17 @@
 import * as mongo from 'mongoose';
 import { JSONOptions } from '../config/db.config';
 
-export enum paymentState {
-  REQUESTED,
-  CONFIRMED
-}
-
 export interface IPayment extends mongo.Document {
   _id: Object;
   transactionDate: Date;
   state: String;
-  cart: Object[];
+  cart: ICart[];
+}
+
+export interface ICart {
+  sourceId: String,
+  purpose: String,
+  amount: Number
 }
 
 export const paymentSchema = new mongo.Schema({
