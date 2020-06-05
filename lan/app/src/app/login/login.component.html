@@ -1,1 +1,24 @@
-<p>login works!</p>
+<div id="login">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="inlineFormInputGroup" formControlName="name" placeholder="Name"
+        required>
+      <small id="emailHelp" class="form-text text-muted">This name will be public.</small>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password"
+        placeholder="Password" required>
+    </div>
+
+    <button type="reset" class="btn btn-danger" (click)="loginForm.reset()">Reset</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+      {{error}}
+    </div>
+
+  </form>
+
+  <p>{{loginForm.value | json}}</p>
+
+</div>
