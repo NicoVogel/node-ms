@@ -17,6 +17,12 @@
       <p>cc</p>
     </ng-template>
   </ng-container>
+  <ng-container ngbNavItem>
+    <a ngbNavLink (click)="logout()">Logout</a>
+    <ng-template ngbNavContent>
+      <p>cc</p>
+    </ng-template>
+  </ng-container>
 </nav>
 
 <router-outlet></router-outlet>
