@@ -5,10 +5,10 @@
     <p>Are you a team or do you play alone?</p>
     <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="type">
       <label class="btn-primary" ngbButtonLabel>
-        <input ngbButton type="radio" value="single"> Single
+        <input ngbButton type="radio" value="users"> Single
       </label>
       <label class="btn-primary" ngbButtonLabel>
-        <input ngbButton type="radio" value="team"> Team
+        <input ngbButton type="radio" value="teams"> Team
       </label>
     </div>
     <hr>
@@ -39,6 +39,10 @@
 
     <button type="reset" class="btn btn-danger" (click)="registrationForm.reset()">Reset</button>
     <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Submit</button>
+
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+      {{error}}
+    </div>
   </form>
 
   <p>{{registrationForm.value | json}}</p>

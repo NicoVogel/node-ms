@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
+import { AuthenticationService } from '../authentication.service';
+import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -9,8 +12,9 @@ import { FormArray } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  error;
   registrationForm = this.formBuilder.group({
-    type: "single",
+    type: "users",
     name: ['', Validators.required],
     password: ['', Validators.required],
     members: this.formBuilder.array([
@@ -18,7 +22,7 @@ export class RegisterComponent implements OnInit {
     ])
   });
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -38,7 +42,13 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(registrationData): void {
-    console.log(registrationData);
-    this.registrationForm.reset();
+    this.authenticationService.register(registrationData.type, registrationData.name, registrationData.password)
+      .pipe(first())
+      .subscribe(
+        data => { this.router.navigate(["/"]); },
+        error => {
+          this.error = error.error.message;
+        }
+      )
   }
 }
