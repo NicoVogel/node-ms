@@ -7,7 +7,7 @@ services:
       - 443:443
     environment: 
       PORT: 80
-      NODE_ENV: development
+      DEPLOY_ENV: development
   mongodb:
     image: mongo:latest
     ports:
