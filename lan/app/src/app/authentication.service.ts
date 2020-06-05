@@ -21,8 +21,8 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(name: string, password: string) {
-    return this.http.post<any>(`${accountServiceURL}/users/authenticate`, { name, password }).pipe(map(user => {
+  login(type: string, name: string, password: string) {
+    return this.http.post<any>(`${accountServiceURL}/${type}/authenticate`, { name, password }).pipe(map(user => {
       // store user and jwt in local storage
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.currentUserSubject.next(user);

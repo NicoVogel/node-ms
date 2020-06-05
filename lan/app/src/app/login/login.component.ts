@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   error: string;
   returnUrl: string;
   loginForm = this.formBuilder.group({
+    type: "users",
     name: ['', Validators.required],
     password: ['', Validators.required]
   })
@@ -27,9 +28,8 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['/returnUrl'] || '/';
   }
   onSubmit(loginData): void {
-    console.log(loginData);
     this.loginForm.reset();
-    this.authenticationService.login(loginData.name, loginData.password)
+    this.authenticationService.login(loginData.type, loginData.name, loginData.password)
       .pipe(first())
       .subscribe(
         data => { this.router.navigate([this.returnUrl]); },

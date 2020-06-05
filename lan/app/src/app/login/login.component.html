@@ -1,10 +1,19 @@
 <div id="login">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
     <h1>Login</h1>
+    <br>
+    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="type">
+      <label class="btn-primary" ngbButtonLabel>
+        <input ngbButton type="radio" value="users"> Single
+      </label>
+      <label class="btn-primary" ngbButtonLabel>
+        <input ngbButton type="radio" value="teams"> Team
+      </label>
+    </div>
+    <hr>
     <div class="form-group">
       <input type="text" class="form-control" id="inlineFormInputGroup" formControlName="name" placeholder="Name"
         required>
-      <small id="emailHelp" class="form-text text-muted">This name will be public.</small>
     </div>
     <div class="form-group">
       <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password"
