@@ -25,7 +25,7 @@ export class EventAdapter {
         return [...mainTopics];
     }
 
-    public subscribe(key: string): Subject<any> {
+    public listen(key: string): Subject<any> {
         const mainTopic = this.getMainTopic(key);
         this.checkIfMainTopicExists(mainTopic);
 
