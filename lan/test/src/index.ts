@@ -3,13 +3,13 @@ import * as Amqp from 'amqp-ts';
 const connection = new Amqp.Connection('amqp://rabbitmq');
 
 // definitions
-const accountExchange = connection.declareExchange('account', 'fanout');
-const accountCreatedExchange = connection.declareExchange('created', 'fanout');
+const accountExchange = connection.declareExchange('account', 'topic', {
+  durable: false
+});
 const queue = connection.declareQueue('');
 
 // bindungs
-accountCreatedExchange.bind(accountExchange);
-queue.bind(accountCreatedExchange);
+queue.bind(accountExchange, 'account.created');
 
 
 queue.activateConsumer((message) => {
@@ -21,5 +21,5 @@ connection.completeConfiguration().then(() => {
   // the following message will be received because
   // everything you defined earlier for this connection now exists
   const msg2 = new Amqp.Message('Test2');
-  accountExchange.send(msg2);
+  accountExchange.send(msg2, 'account.created');
 });
