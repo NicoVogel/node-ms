@@ -1,1 +1,52 @@
-<p>event works!</p>
+<div id="event">
+
+  <nav ngbNav #nav="ngbNav" class="nav-tabs nav-pills nav=fill">
+    <ng-container ngbNavItem>
+      <a ngbNavLink>Register for Event</a>
+
+      <ng-template ngbNavContent>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let _event of eventList">
+            <td>
+              {{_event.title}}
+            </td>
+            <td>
+              {{_event.description}}
+            </td>
+            <td>
+              <button (click)="register(_event.id)" class="btn btn-primary">X</button>
+            </td>
+          </tr>
+        </table>
+      </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem>
+      <a ngbNavLink>Create Event</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="createEventForm" (ngSubmit)="onSubmit(createEventForm.value)">
+          <h1>just do it.</h1>
+          <div class="form-group">
+            <input type="text" class="form-control" id="inlineFormInputGroup" formControlName="title"
+              placeholder="Title" required>
+            <input type="text" class="form-control" id="inlineFormInputGroup" formControlName="description"
+              placeholder="Description" required>
+          </div>
+
+          <div>
+            <button type="submit" class="btn btn-primary" [disabled]="!createEventForm.valid">Submit</button>
+            <button type="reset" class="btn btn-danger" (click)="createEventForm.reset()">Reset</button>
+          </div>
+
+        </form>
+
+      </ng-template>
+    </ng-container>
+  </nav>
+
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
