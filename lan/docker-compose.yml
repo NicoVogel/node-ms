@@ -50,7 +50,8 @@ services:
     depends_on:
       - prometheus
     environment:
-      GF_SECURITY_ADMIN_PASSWORD: root
+      # user name of admin is: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
     # ports:
       # - 3000:3000
   
