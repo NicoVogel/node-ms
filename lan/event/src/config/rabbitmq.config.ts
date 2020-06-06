@@ -5,3 +5,5 @@ export const mainTopics = [
     'event',
     'billing'
 ]
+
+export const topicKeys = ['account.create'];
