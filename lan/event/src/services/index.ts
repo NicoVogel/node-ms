@@ -29,6 +29,19 @@ export async function getAll(model: Model<IEvent>) {
 
 // UPDATE
 
+export async function completeBilling(eventModel: Model<IEvent>, accountModel: Model<IAccount>, eventId: string, accountId: string) {
+    const event = await getById(eventModel, eventId);
+    if (event === null) {
+        throw `BillingComplete failed, no event with id '${eventId}' exists.`
+    }
+    const existingAccount = event.registered.find(acc => acc._id === accountId);
+    if (existingAccount === undefined) {
+        throw `BillingComplete failed, no account with id '${accountId}' exists.`
+    }
+    existingAccount.registrationComplete = true;
+    event.save();
+}
+
 export async function register(eventModel: Model<IEvent>, accountModel: Model<IAccount>, eventId: string, accountId: string) {
     let event = await getById(eventModel, eventId);
     if (event === null) {

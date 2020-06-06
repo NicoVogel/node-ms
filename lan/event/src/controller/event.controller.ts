@@ -2,8 +2,15 @@ import { Request, Response, NextFunction } from 'express';
 import * as dbService from '../services'
 import * as db from '../models';
 import { eventAdapter } from '../services';
-import { IAccount } from '../models/ext.account.model';
 import { IEvent } from '../models/event.model';
+
+export function initEventMessaging() {
+    eventAdapter.listen('billing.completed').subscribe(data => billingComplete(data));
+}
+
+
+
+// HELPER
 
 const tip = <T>(callback: (d: T) => void) => (data: T): T => {
     callback(data);
@@ -24,7 +31,19 @@ const mapToOutput = (event: IEvent, accountId: string) => {
     }
 }
 
+// MESSAGING
 
+function billingComplete(data: {
+    _id: {
+        accountId: string,
+        eventId: string
+    }
+}) {
+    dbService.completeBilling(db.default.Event, db.default.Account, data._id.eventId, data._id.eventId);
+}
+
+
+// REST
 
 export function create(req: Request, res: Response, next: NextFunction) {
     dbService.create(db.default.Event, req.body)

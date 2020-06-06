@@ -5,6 +5,7 @@ import { eventAdapter } from './services';
 import * as promBundle from 'express-prom-bundle'
 import EventRouter from './routes/event.routes';
 import { initAccountMessaging } from './controller/ext.account.controller';
+import { initEventMessaging } from './controller/event.controller';
 const app = express();
 
 app.use(promBundle({ includeMethod: true, includePath: true }));
@@ -15,6 +16,7 @@ app.use(cors());
 
 // init messaging
 initAccountMessaging();
+initEventMessaging();
 
 
 app.use('/', EventRouter);
