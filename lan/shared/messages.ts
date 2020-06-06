@@ -6,6 +6,7 @@ const accountEvents = {
   }
 }
 const billingEvents = {
+  // event tells billing to open an new invoice (1)
   'billing.request': {
     _id: {
       accountId: "mongo ObjectId string",
@@ -20,18 +21,21 @@ const billingEvents = {
       }
     ]
   },
+  // event tells billing that the invoice is complete (3)
   'billing.pending': {
     _id: {
       accountId: "mongo ObjectId string",
       eventId: "mongo ObjectId string"
     }
   },
+  // billing shouts out that the transaction was made (4)
   'billing.completed': {
     _id: {
       accountId: "mongo ObjectId string",
       eventId: "mongo ObjectId string"
     }
   },
+  // inform billing over a new entry in for the invoice (2) 
   'billing.addToCart': {
     _id: {
       accountId: "mongo ObjectId string",
@@ -45,6 +49,7 @@ const billingEvents = {
       }
     ]
   },
+  // inform billing, that an entry should be removed (2)
   'billing.removeFromCart': {
     _id: {
       accountId: "mongo ObjectId string",
