@@ -3,7 +3,6 @@ const eventRest = {
         '/': {
             body: {
                 title: "string",
-                created: "Date",
                 description: "string",
                 price: "number"
             }
