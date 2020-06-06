@@ -14,15 +14,15 @@ export async function requestPayment(paymentObj: Object) {
     })
 }
 
-export async function pendingPayment(_id: Object) {
+export async function pendingPayment(_id: any) {
   setState(_id, "PENDING");
 }
 
-export async function completedPayment(_id: Object) {
+export async function completedPayment(_id: any) {
   setState(_id, "COMPLETED");
 }
 
-export async function setState(_id: Object, state: string) {
+async function setState(_id: any, state: string) {
   const target = await Payment.findOne({ _id });
   if (!target) {
     console.warn("account-event pair does not exist")
@@ -33,7 +33,7 @@ export async function setState(_id: Object, state: string) {
   target.save();
 }
 
-export async function addCartElementArray(_id: Object, cartArray: ICart[], replace = false) {
+export async function addCartElementArray(_id: any, cartArray: ICart[], replace = false) {
   const target = await Payment.findOne({ _id });
 
   if (!target) {
@@ -48,7 +48,7 @@ export async function addCartElementArray(_id: Object, cartArray: ICart[], repla
   target.save();
 }
 
-export async function removeCartElement(_id: Object, sourceId: string, purpose: string) {
+export async function removeCartElement(_id: any, sourceId: string, purpose: string) {
   const target = await Payment.findOne({ _id });
   if (!target) {
     console.error("account-event pair does not exist")

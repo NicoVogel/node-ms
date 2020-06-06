@@ -2,15 +2,15 @@ import * as mongo from 'mongoose';
 import { JSONOptions } from '../config/db.config';
 
 export interface IPayment extends mongo.Document {
-  _id: Object;
+  _id: { accountId: string, eventId: string };
   transactionDate: Date;
-  state: String;
+  state: string;
   cart: ICart[];
 }
 
 export interface ICart {
-  sourceId: String,
-  purpose: String,
+  sourceId: string,
+  purpose: string,
   amount: Number
 }
 
