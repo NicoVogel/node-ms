@@ -10,7 +10,7 @@ export function initAccountMessaging() {
 }
 
 
-export async function addAccount(accountObj: Object) {
+async function addAccount(accountObj: Object) {
   const account = new Account(accountObj);
 
   account.save()
