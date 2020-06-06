@@ -9,7 +9,7 @@ export async function addAccount(accountObj: Object) {
   });
 }
 
-export async function findAccount(accountId: string): Promise<Boolean> {
+export async function checkAccount(accountId: string): Promise<Boolean> {
   const target = await Account.findById(accountId);
   if (target) {
     return true;
