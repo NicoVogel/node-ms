@@ -2,6 +2,7 @@ import * as Amqp from 'amqp-ts';
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from 'rxjs'
 import { rabbitmqURL, mainTopics } from '../config/rabbitmq.config';
+import { json } from 'express';
 
 const keyRegex = /^(\w+).[\w|.]+$/;
 
@@ -39,6 +40,7 @@ export class EventAdapter {
 
         const newSubject = new Subject<any>();
         queue.activateConsumer((message) => {
+            console.log(`receive from '${key}': ${JSON.stringify(message.getContent())}`)
             newSubject.next(message.getContent());
             message.ack();
         })
@@ -52,6 +54,7 @@ export class EventAdapter {
 
         const message = new Amqp.Message(data);
         if (this.readyForPublish) {
+            console.log(`publish to '${key}': ${JSON.stringify(data)}`)
             this.mainExchanges[mainTopic].send(message, key);
         } else {
             this.publishinQueue.push({ key, mainTopic, message });
