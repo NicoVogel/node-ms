@@ -2,7 +2,6 @@
 import { EventAdapter } from './rabbitmq.service';
 import { Model } from 'mongoose';
 import { IEvent } from '../models/event.model';
-import { async } from 'rxjs/internal/scheduler/async';
 import { IAccount } from '../models/ext.account.model';
 export const eventAdapter = new EventAdapter();
 

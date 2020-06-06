@@ -39,7 +39,7 @@ function billingComplete(data: {
         eventId: string
     }
 }) {
-    dbService.completeBilling(db.default.Event, db.default.Account, data._id.eventId, data._id.eventId);
+    dbService.completeBilling(db.default.Event, db.default.Account, data._id.eventId, data._id.accountId);
 }
 
 
