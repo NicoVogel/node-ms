@@ -105,6 +105,28 @@ export async function removeCartElement(_id: any, sourceId: string, purpose: str
 
 // REST
 
+export async function pay(req: Request, res: Response) {
+  try {
+    const _id = { accountId: req.body.accountId, eventId: req.body.eventId };
+    const target = await findPayment(_id);
+    if (target === null) {
+      res.sendStatus(422).send(`no invoice for given ids: ${_id}`)
+      return;
+    }
+    target.transactionDate = new Date();
+    target.state = "COMPLETED";
+    target.save();
+    eventAdapter.publish('billing.completed', { _id });
+    res.sendStatus(200).send('OK');
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || 'Error in retrieving all Payments',
+    });
+  }
+}
+
+
 export async function getAllFromAccount(req: Request, res: Response) {
   const idPairs = await Payment.aggregate<{ _id: string, eventIds: string[] }>([
     {
@@ -134,7 +156,7 @@ export async function getAllFromAccount(req: Request, res: Response) {
 
 export function getById(req: Request, res: Response) {
   const { accountId, eventId } = req.params;
-  Payment.findById({ accountId, eventId })
+  findPayment({ accountId, eventId })
     .then(data => {
       if (!data) res.status(404).send({ message: `No Payment found with accountId ${accountId}:eventId ${eventId}` });
       else res.send(data);

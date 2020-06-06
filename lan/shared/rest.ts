@@ -1,3 +1,17 @@
+const billingRest = {
+    post: {
+        '/pay': {
+            body: {
+                eventId: "mongo ObjectId string",
+                accountId: "mongo ObjectId string"
+            }
+        }
+    },
+    get: {
+        '/:accountId': {},
+        '/:accountId/:eventId': {}
+    }
+}
 const eventRest = {
     post: {
         '/': {
@@ -21,9 +35,7 @@ const eventRest = {
         }
     },
     get: {
-        '/': {
-        },
-        '/:id': {
-        },
+        '/': {},
+        '/:id': {},
     }
 }
