@@ -2,6 +2,8 @@
 import { EventAdapter } from './rabbitmq.service';
 import { Model } from 'mongoose';
 import { IEvent } from '../models/event.model';
+import { async } from 'rxjs/internal/scheduler/async';
+import { IAccount } from '../models/ext.account.model';
 export const eventAdapter = new EventAdapter();
 
 // CREATE
@@ -25,3 +27,21 @@ export async function getAll(model: Model<IEvent>) {
     return await model.find();
 }
 
+// UPDATE
+
+export async function register(eventModel: Model<IEvent>, accountModel: Model<IAccount>, eventId: string, accountId: string) {
+    let event = await getById(eventModel, eventId);
+    if (event === null) {
+        throw `Registration failed, no event with id '${eventId}' exists.`
+    }
+    const account = await accountModel.findById(accountId);
+    if (account === null) {
+        throw `Registration failed, no account with id '${accountId}' exists.`
+    }
+    const existingAccount = event.registered.find(acc => acc._id === accountId);
+    if (existingAccount === undefined) {
+        event.registered.push({ _id: account.id, name: account.name, registrationComplete: false })
+        event = await event.save();
+    }
+    return { event, account };
+}

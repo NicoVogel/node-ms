@@ -79,8 +79,14 @@ const billingEvents = {
   }
 }
 const eventEvents = {
+  // sent by event when a new event is created
   'event.created': {
     _id: "mongo ObjectId string",
     title: "string"
+  },
+  // sent by event when a user starts to register himself
+  'event.registered': {
+    eventId: "string",
+    accountId: "string"
   }
 }
