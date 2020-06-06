@@ -5,6 +5,16 @@ import { checkAccount } from './ext.account.controller';
 import { eventAdapter } from '../services';
 const Payment = db.default.Payment;
 
+export function initPaymentMessaging() {
+  eventAdapter.listen('billing.pending').subscribe(data => pendingPayment(data._id));
+  eventAdapter.listen('billing.completed').subscribe(data => completedPayment(data._id));
+  eventAdapter.listen('billing.addToCart').subscribe(data => addCartElementArray(data._id, data.cart));
+  eventAdapter.listen('billing.replaceCart').subscribe(data => addCartElementArray(data._id, data.cart, true));
+  eventAdapter.listen('billing.emptyCart').subscribe(data => addCartElementArray(data._id, [], true));
+  eventAdapter.listen('billing.removeFromCart').subscribe(data => removeCartElement(data._id, data.sourceId, data.purpose));
+}
+
+
 export async function requestPayment(paymentObj: object) {
   const payment = new Payment(paymentObj);
   if (!await checkAccount(payment._id.accountId)) {
