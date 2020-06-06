@@ -5,12 +5,9 @@
   <ng-container ngbNavItem>
     <a ngbNavLink routerLink="/event" routerLinkActive="active">Event</a>
   </ng-container>
-  <ng-container ngbNavItem [disabled]=true>
-    <a ngbNavLink routerLink="/test" routerLinkActive="active">Test</a>
-  </ng-container>
-  <ng-container ngbNavItem>
+  <!-- <ng-container ngbNavItem>
     <a ngbNavLink routerLink="/about" routerLinkActive="active">About</a>
-  </ng-container>
+  </ng-container> -->
   <ng-container *ngIf="currentUser" ngbNavItem>
     <a ngbNavLink (click)="logout()">Logout</a>
   </ng-container>
