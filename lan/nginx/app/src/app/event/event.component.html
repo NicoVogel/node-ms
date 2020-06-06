@@ -9,6 +9,7 @@
           <tr>
             <th>Title</th>
             <th>Description</th>
+            <th>Price</th>
             <th>Register</th>
             <th>Confirm</th>
           </tr>
@@ -20,13 +21,47 @@
               {{_event.description}}
             </td>
             <td>
-              <button (click)="register(_event.id)" class="btn btn-primary">X</button>
+              {{_event.price}}
+            </td>
+            <td>
+              <button ngbButton (click)="register(_event.id)" class="btn btn-primary"
+                [disabled]="checkRegistrationComplete(_event) && checkConfirmAvailable(_event)">X</button>
             </td>
             <td *ngIf="checkConfirmAvailable(_event)">
-              <button (click)="confirmAvailable(_event.id)" class="btn btn-secondary">X</button>
+              <button (click)="confirmAvailable(_event.id, content)" class="btn btn-outline-primary"
+                [disabled]="checkRegistrationComplete(_event)">X</button>
             </td>
           </tr>
         </table>
+      </ng-template>
+
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Your Billing elements</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table>
+            <tr>
+              <th>Source</th>
+              <th>Purpose</th>
+              <th>Amount</th>
+            </tr>
+            <tr *ngFor="let cartElem of billingData.cart">
+              <td>{{cartElem.sourceId}}</td>
+              <td>{{cartElem.purpose}}</td>
+              <td>{{cartElem.amount}}</td>
+            </tr>
+          </table>
+          <hr>
+          <p>Date: {{billingData.transactionDate}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark"
+            (click)="payBill(billingData.id);modal.close('Save click')">Pay</button>
+        </div>
       </ng-template>
     </ng-container>
     <ng-container ngbNavItem>
@@ -39,6 +74,8 @@
               placeholder="Title" required>
             <input type="text" class="form-control" id="inlineFormInputGroup" formControlName="description"
               placeholder="Description" required>
+            <input type="text" class="form-control" id="inlineFormInputGroup" formControlName="price"
+              placeholder="Price" required>
           </div>
 
           <div>
