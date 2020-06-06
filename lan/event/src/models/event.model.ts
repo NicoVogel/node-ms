@@ -9,7 +9,8 @@ export interface IEvent extends mongo.Document {
     registered: {
         _id: string,
         name: string,
-        registrationComplete: boolean
+        registrationComplete: boolean,
+        billingPending: boolean
     }[];
 }
 
@@ -20,7 +21,8 @@ export const eventSchema = new mongo.Schema({
     registered: [{
         name: { type: String, required: true },
         _id: Object,
-        registrationComplete: Boolean
+        registrationComplete: Boolean,
+        billingPending: Boolean
     }]
 })
 

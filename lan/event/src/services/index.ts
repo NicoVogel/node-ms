@@ -40,8 +40,22 @@ export async function register(eventModel: Model<IEvent>, accountModel: Model<IA
     }
     const existingAccount = event.registered.find(acc => acc._id === accountId);
     if (existingAccount === undefined) {
-        event.registered.push({ _id: account.id, name: account.name, registrationComplete: false })
+        event.registered.push({ _id: account.id, name: account.name, registrationComplete: false, billingPending: false })
         event = await event.save();
     }
     return { event, account };
+}
+
+export async function confirm(eventModel: Model<IEvent>, accountModel: Model<IAccount>, eventId: string, accountId: string) {
+    const event = await getById(eventModel, eventId);
+    if (event === null) {
+        throw `Confirm failed, no event with id '${eventId}' exists.`
+    }
+    const existingAccount = event.registered.find(acc => acc._id === accountId);
+    if (existingAccount === undefined) {
+        throw `Confirm failed, no account with id '${accountId}' exists.`
+    }
+    existingAccount.billingPending = true;
+    event.save();
+    return { event, account: existingAccount };
 }
