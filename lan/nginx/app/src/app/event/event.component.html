@@ -9,7 +9,8 @@
           <tr>
             <th>Title</th>
             <th>Description</th>
-            <th></th>
+            <th>Register</th>
+            <th>Confirm</th>
           </tr>
           <tr *ngFor="let _event of eventList">
             <td>
@@ -20,6 +21,9 @@
             </td>
             <td>
               <button (click)="register(_event.id)" class="btn btn-primary">X</button>
+            </td>
+            <td *ngIf="checkConfirmAvailable(_event)">
+              <button (click)="confirmAvailable(_event.id)" class="btn btn-secondary">X</button>
             </td>
           </tr>
         </table>

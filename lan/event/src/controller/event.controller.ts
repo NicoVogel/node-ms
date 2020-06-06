@@ -44,7 +44,6 @@ export function getById(req: Request, res: Response, next: NextFunction) {
 
 export function getAll(req: Request, res: Response, next: NextFunction) {
     dbService.getAll(db.default.Event)
-        .then(data => data.map(value => mapToOutput(value, '')))
         .then(data => res.json(data))
         .catch(next);
 }
