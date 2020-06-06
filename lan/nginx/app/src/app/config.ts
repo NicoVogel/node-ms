@@ -1,1 +1,1 @@
-export const accountServiceURL = "http://bw.vietdo.me/api/account"
+export const accountServiceURL = `${location.origin}/api/account`
