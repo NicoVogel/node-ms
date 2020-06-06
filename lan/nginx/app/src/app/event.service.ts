@@ -22,4 +22,11 @@ export class EventService {
   registerEvent(eventId: string, accountId: string) {
     return this.http.post<any>(`${eventServiceURL}/register`, { eventId, accountId });
   }
+  confirmEvent(eventId: string, accountId: string) {
+    return this.http.post<any>(`${eventServiceURL}/confirm`, { eventId, accountId });
+  }
+
+  fetchBilling(eventId: string, accountId: string) {
+    return this.http.get<any>(`${eventServiceURL}/billing/${accountId}/${eventId}`);
+  }
 }

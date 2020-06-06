@@ -10,6 +10,7 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class EventComponent implements OnInit {
   eventList: _Event[];
+  userId: string;
   createEventForm = this.formBuilder.group({
     title: ['', Validators.required],
     description: ['', Validators.required]
@@ -19,16 +20,23 @@ export class EventComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventService.fetchEventList().subscribe(data => this.eventList = data);
+    this.userId = this.authenticationService.currentUserValue.id;
+  }
+
+  checkConfirmAvailable(event: _Event) {
+    return event.registered.filter(participant => participant._id === this.userId).length > 0;
+  }
+  confirmAvailable(eventId: string) {
+    this.eventService.confirmEvent(eventId, this.userId).subscribe(data => console.log(data));
   }
 
   onSubmit(createEventData): void {
-
-    console.log(createEventData)
     this.createEventForm.reset();
     this.eventService.createEvent(createEventData).subscribe(data => console.log(data));
   }
 
   register(eventId: string) {
-    this.eventService.registerEvent(eventId, this.authenticationService.currentUserValue.id).subscribe(data => console.log(data));
+    this.eventService.registerEvent(eventId, this.userId).subscribe(data => console.log(data));
   }
+
 }
