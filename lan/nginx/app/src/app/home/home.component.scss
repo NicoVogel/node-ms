@@ -1,0 +1,28 @@
+#home{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin:auto;
+  .greeting{
+    width: 95vw;
+    height: 80vh;
+    margin: 30px 0;
+    // border: 3px grey solid;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 15px rgba(240,240,240,1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    // margin:auto;
+    color:white;
+    font-size: 2rem;
+    line-height: 0.7;
+    #greeting-name{
+      font-size: 8rem;
+    }
+  }
+
+}
