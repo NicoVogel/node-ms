@@ -16,8 +16,8 @@ services:
   # database
   mongodb:
     image: mongo:latest
-    ports:
-      - 27017:27017
+    # ports:
+    #   - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
@@ -28,9 +28,9 @@ services:
   # async messaging
   rabbitmq:
       image: rabbitmq:3-management-alpine
-      ports:
+      # ports:
         # management interface
-        - 15672:15672
+        # - 15672:15672
   
   # monitoring
   # tutorial: https://prometheus.io/docs/guides/cadvisor/#prometheus-configuration

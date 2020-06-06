@@ -57,7 +57,44 @@ http {
     
     server {
 
-        # monitoring access
+        # management access
+        listen ${PORT};
+        server_name mgnt.${SERVER_NAME};
+
+        sendfile on;
+        charset utf-8;
+
+        gzip on;
+        gzip_http_version 1.1;
+        gzip_disable "MSIE [1-6]\.";
+        gzip_min_length 1100;
+        gzip_vary on;
+        gzip_proxied expired no-cache no-store private auth;
+        gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+        gzip_comp_level 7;
+
+        location /metric{
+            rewrite /metric/(.*) /$1  break;
+            proxy_pass         http://grafana:3000;
+            proxy_redirect     off;
+            proxy_set_header   Host $host;
+        }
+        location /rabbitmq{
+            rewrite /rabbitmq/(.*) /$1  break;
+            proxy_pass         http://rabbitmq:15672;
+            proxy_redirect     off;
+            proxy_set_header   Host $host;
+        }
+        location /mongo{
+            rewrite /mongo/(.*) /$1  break;
+            proxy_pass         http://mongodb:27017;
+            proxy_redirect     off;
+            proxy_set_header   Host $host;
+        }
+    }
+    server {
+
+        # management access
         listen ${PORT};
         server_name metric.${SERVER_NAME};
 
@@ -72,7 +109,7 @@ http {
         gzip_proxied expired no-cache no-store private auth;
         gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
         gzip_comp_level 7;
-        
+
         location /{
             proxy_pass         http://grafana:3000;
             proxy_redirect     off;
