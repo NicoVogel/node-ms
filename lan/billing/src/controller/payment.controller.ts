@@ -3,6 +3,9 @@ import * as db from '../models';
 import { ICart } from '../models/payment.model';
 import { checkAccount } from './ext.account.controller';
 import { eventAdapter } from '../services';
+import { runInThisContext } from 'vm';
+import { async } from 'rxjs/internal/scheduler/async';
+import { resolve } from 'path';
 const Payment = db.default.Payment;
 
 export function initPaymentMessaging() {
@@ -102,45 +105,33 @@ export async function removeCartElement(_id: any, sourceId: string, purpose: str
 
 // REST
 
-export function test(req: Request, res: Response) {
-  // Payment.collection.drop();
-  // addCartElementArray({ accountId: 'account5', eventId: 'event4' }, [{
-  //   "sourceId": "aaaa",
-  //   "purpose": "purp12",
-  //   "amount": 52.5
-  // }], true)
-  // completedPayment({ accountId: 'account5', eventId: 'event4' });
-  // removeCartElement({ accountId: 'account5', eventId: 'event4' }, "aaaa", "purp12");
-  eventAdapter.publish('billing.pending', {
-    _id: {
-      accountId: "5edbad17be3131004262b5e5",
-      eventId: "eve"
+export async function getAllFromAccount(req: Request, res: Response) {
+  const idPairs = await Payment.aggregate<{ _id: string, eventIds: string[] }>([
+    {
+      '$group': {
+        '_id': '$_id.accountId',
+        'eventIds': {
+          '$addToSet': '$_id.eventId'
+        }
+      }
     }
-  })
-  res.end();
-}
-
-export function add(req: Request, res: Response) {
-  if (!req.body._id || !req.body._id.accountId || !req.body._id.eventId) {
-    res.status(400).send({ message: "Content can not be empty" });
-    return;
-  }
-  requestPayment(req.body);
-  res.end();
-}
-
-export function getAll(req: Request, res: Response) {
-  Payment.find()
-    .then(data => {
-      res.json(data);
-    })
+  ])
+    .then(data => data[0])
+    .then(data => data.eventIds.map(eventId => {
+      return { _id: { accountId: data._id, eventId } }
+    }))
     .catch((err) => {
       res.status(500).send({
         message:
           err.message || 'Error in retrieving all Payments',
       });
     });
+  if (idPairs) {
+    const data = await Promise.all(idPairs.map(async (id) => Payment.findOne(id)));
+    res.json(data.filter(result => result !== null));
+  }
 }
+
 export function getById(req: Request, res: Response) {
   const { accountId, eventId } = req.params;
   Payment.findById({ accountId, eventId })
