@@ -6,8 +6,7 @@ export const mainTopics = [
     'billing'
 ]
 
-export const topicKeys: Record<string, string[]> = {
-    account: [
-        'account.created'
-    ]
-}
+export const topicKeys = [
+    'account.created',
+    'billing.payment'
+]

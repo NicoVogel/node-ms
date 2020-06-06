@@ -6,4 +6,7 @@ export const mainTopics = [
     'billing'
 ]
 
-export const topicKeys = ['account.create'];
+export const topicKeys = [
+    'account.created',
+    'billing.payment'
+]

@@ -10,15 +10,14 @@ import { IUser } from '../models/user.model';
 export const eventAdapter = new EventAdapter();
 
 export function initAMQP() {
-  for (const service in topicKeys) {
-    if (topicKeys.hasOwnProperty(service)) {
-      const serviceEvent = topicKeys[service];
-
-      serviceEvent.forEach(event => {
-        eventAdapter.listen(event).subscribe(e => console.log(`${event}:\t\t${JSON.stringify(e)}`));
-      });
+  topicKeys.forEach(key => {
+    try {
+      eventAdapter.listen(key).subscribe(e => console.log(`${key}: \t\t${JSON.stringify(e)} `));
+    } catch (error) {
+      console.error(`wrong topicKey in config! the wrong key is: ${key}. Error: ${error.getMessage()} `);
     }
-  }
+  })
+
   eventAdapter.activate();
 }
 

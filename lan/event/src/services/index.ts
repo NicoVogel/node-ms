@@ -3,14 +3,15 @@ import { EventAdapter } from './rabbitmq.service';
 import { topicKeys } from '../config/rabbitmq.config';
 import { Model } from 'mongoose';
 import { IEvent } from '../models/event.model';
+import { addAccount } from '../controller/ext.account.controller';
 
 export const eventAdapter = new EventAdapter();
 
 
 export function initAMQP() {
-    topicKeys.forEach(key =>
-        eventAdapter.listen(key).subscribe(e => console.log(`${key}: \t\t${JSON.stringify(e)} `))
-    )
+    if (topicKeys.includes('account.created')) {
+        eventAdapter.listen('account.created').subscribe(data => addAccount(data));
+    }
     eventAdapter.activate();
 }
 
@@ -36,3 +37,4 @@ export async function getById(model: Model<IEvent>, id: string) {
 export async function getAll(model: Model<IEvent>) {
     return await model.find();
 }
+
