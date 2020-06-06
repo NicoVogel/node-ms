@@ -3,6 +3,7 @@ import * as db from '../models';
 import { ICart } from '../models/payment.model';
 import { checkAccount } from './ext.account.controller';
 import { eventAdapter } from '../services';
+import { async } from 'rxjs/internal/scheduler/async';
 const Payment = db.default.Payment;
 
 export function initPaymentMessaging() {
@@ -14,6 +15,9 @@ export function initPaymentMessaging() {
   eventAdapter.listen('billing.emptyCart').subscribe(data => addCartElementArray(data._id, [], true));
   eventAdapter.listen('billing.removeFromCart').subscribe(data => removeCartElement(data._id, data.sourceId, data.purpose));
 }
+
+const findPayment = async (_id: { accountId: string, eventId: string }) =>
+  await Payment.findOne({ _id: { accountId: _id.accountId, eventId: _id.eventId } });
 
 
 export async function requestPayment(paymentObj: object) {
@@ -50,7 +54,7 @@ export async function completedPayment(_id: any) {
 }
 
 async function setState(_id: any, state: string) {
-  const target = await Payment.findOne({ _id });
+  const target = await findPayment(_id);
   if (!target) {
     console.warn("account-event pair does not exist")
     return;
@@ -65,7 +69,7 @@ export async function addCartElementArray(_id: any, cartArray: ICart[], replace 
     console.error(`addCartElementArray with ${_id.accountId} failed: accountId does not exist`)
     return;
   }
-  const target = await Payment.findOne({ _id });
+  const target = await findPayment(_id);
 
   if (!target) {
     console.warn("account-event pair does not exist")
@@ -84,7 +88,7 @@ export async function removeCartElement(_id: any, sourceId: string, purpose: str
     console.error(`removeCartElement with ${_id.accountId} failed: accountId does not exist`)
     return;
   }
-  const target = await Payment.findOne({ _id });
+  const target = await findPayment(_id);
   if (!target) {
     console.error("account-event pair does not exist")
     return;
