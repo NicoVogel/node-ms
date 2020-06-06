@@ -41,4 +41,10 @@ services:
       NODE_ENV: development
     volumes:
       - ./event/src:/app/src
+  # blank:
+  #   build: blank
+  #   environment: 
+  #     NODE_ENV: development
+  #   volumes:
+  #     - ./blank/src:/app/src
 

@@ -32,3 +32,14 @@ db.createUser({
     { role: "readWrite", db: "node-ms-event" }
   ]
 });
+
+// db = db.getSiblingDB('node-ms-blank')
+// db.createUser({
+//   user: "blank",
+//   pwd: "blank",
+//   roles: [
+//     { role: "dbAdmin", db: "node-ms-blank" },
+//     { role: "userAdmin", db: "node-ms-blank" },
+//     { role: "readWrite", db: "node-ms-blank" }
+//   ]
+// });
