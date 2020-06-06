@@ -19,8 +19,6 @@ export function create(req: Request, res: Response, next: NextFunction) {
         .catch(next)
 }
 
-
-
 export function getById(req: Request, res: Response, next: NextFunction) {
     dbService.getById(db.default.Event, req.params.id)
         .then(notFound(res))
