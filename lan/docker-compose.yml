@@ -35,6 +35,7 @@ services:
   
   # monitoring
   # tutorial: https://prometheus.io/docs/guides/cadvisor/#prometheus-configuration
+  # code example: https://github.com/vegasbrianc/prometheus/blob/master/docker-compose.yml
   prometheus:
     image: prom/prometheus:v2.1.0
     volumes:
