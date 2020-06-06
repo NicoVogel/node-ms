@@ -16,7 +16,8 @@ RUN npm run build
 FROM nginx:1.19-alpine
 
 USER root
-ENV PORT=8080 \
+ENV PORT=80 \
+  MONGO_PORT=8080 \
   SERVER_NAME=localhost
 
 

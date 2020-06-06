@@ -25,6 +25,6 @@ EOM
 fi
 
 
-envsubst '${PORT},${SERVER_NAME},${ANGULAR_FORWARD},${ANGULAR_LOCAL}, ${REDIRECT_INDEX}' < /scripts/nginx.conf.template > /etc/nginx/nginx.conf
+envsubst '${PORT},${SERVER_NAME},${ANGULAR_FORWARD},${ANGULAR_LOCAL}, ${REDIRECT_INDEX}, ${MONGO_PORT}' < /scripts/nginx.conf.template > /etc/nginx/nginx.conf
 
 nginx -g "daemon off;"
