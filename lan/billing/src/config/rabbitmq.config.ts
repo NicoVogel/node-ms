@@ -5,3 +5,9 @@ export const mainTopics = [
     'event',
     'billing'
 ]
+
+export const topicKeys: Record<string, string[]> = {
+    account: [
+        'account.created'
+    ]
+}
