@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as db from '../models';
 import { ICart } from '../models/payment.model';
 import { checkAccount } from './ext.account.controller';
+import { eventAdapter } from '../services';
 const Payment = db.default.Payment;
 
 export async function requestPayment(paymentObj: object) {
@@ -95,7 +96,13 @@ export function test(req: Request, res: Response) {
   //   "amount": 52.5
   // }], true)
   // completedPayment({ accountId: 'account5', eventId: 'event4' });
-  removeCartElement({ accountId: 'account5', eventId: 'event4' }, "aaaa", "purp12");
+  // removeCartElement({ accountId: 'account5', eventId: 'event4' }, "aaaa", "purp12");
+  eventAdapter.publish('billing.pending', {
+    _id: {
+      accountId: "5edbad17be3131004262b5e5",
+      eventId: "eve"
+    }
+  })
   res.end();
 }
 
