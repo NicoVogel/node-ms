@@ -30,3 +30,10 @@ export function getAll(req: Request, res: Response, next: NextFunction) {
         .then(data => res.json(data))
         .catch(next);
 }
+
+export function register(req: Request, res: Response, next: NextFunction) {
+    dbService.register(db.default.Event, db.default.Account, req.body.eventId, req.body.accountId)
+        .then(tip(data => eventAdapter.publish('event.registered', { eventId: data.event.id, accountId: data.account.id })))
+        .then(data => res.json(data))
+        .catch(next);
+}

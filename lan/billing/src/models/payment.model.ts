@@ -11,7 +11,7 @@ export interface IPayment extends mongo.Document {
 export interface ICart {
   sourceId: string,
   purpose: string,
-  amount: Number
+  amount: number
 }
 
 export const paymentSchema = new mongo.Schema({

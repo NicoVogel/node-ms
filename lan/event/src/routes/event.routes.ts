@@ -5,5 +5,6 @@ const EventRouter = express.Router();
 EventRouter.post('/', EventController.create);
 EventRouter.get('/', EventController.getAll);
 EventRouter.get('/:id', EventController.getById);
+EventRouter.post('/register', EventController.register);
 
 export default EventRouter;
