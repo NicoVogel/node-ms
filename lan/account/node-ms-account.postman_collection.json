@@ -27,7 +27,7 @@
 					}
 				},
 				"url": {
-					"raw": "bw.vietdo.me/api/account/users/register",
+					"raw": "host/api/account/users/register",
 					"host": [
 						"bw",
 						"vietdo",
@@ -69,7 +69,7 @@
 					"raw": "{\n\t\"name\":\"user1\",\n\t\"password\": \"passwordnew\"\n}"
 				},
 				"url": {
-					"raw": "bw.vietdo.me/api/account/users/5ed91e25fd9d2300a4810093",
+					"raw": "host/api/account/users/5ed91e25fd9d2300a4810093",
 					"host": [
 						"bw",
 						"vietdo",
@@ -101,7 +101,7 @@
 					"raw": "{\n\t\"name\":\"user1\",\n\t\"password\": \"password1\"\n}"
 				},
 				"url": {
-					"raw": "bw.vietdo.me/api/account/users/authenticate",
+					"raw": "host/api/account/users/authenticate",
 					"host": [
 						"bw",
 						"vietdo",
@@ -127,7 +127,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "bw.vietdo.me/api/account/users/5ed90cb6694464007a60aa88",
+					"raw": "host/api/account/users/5ed90cb6694464007a60aa88",
 					"host": [
 						"bw",
 						"vietdo",
@@ -159,7 +159,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "bw.vietdo.me/api/account/users",
+					"raw": "host/api/account/users",
 					"host": [
 						"bw",
 						"vietdo",
@@ -180,7 +180,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "bw.vietdo.me/api/account/users/5ed911a2bf7a3e00ea7b35bc",
+					"raw": "host/api/account/users/5ed911a2bf7a3e00ea7b35bc",
 					"host": [
 						"bw",
 						"vietdo",
@@ -197,7 +197,7 @@
 			"response": []
 		},
 		{
-			"name": "bw.vietdo.me/api/account/users/current",
+			"name": "host/api/account/users/current",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -212,7 +212,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "bw.vietdo.me/api/account/users/current",
+					"raw": "host/api/account/users/current",
 					"host": [
 						"bw",
 						"vietdo",
