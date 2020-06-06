@@ -1,0 +1,90 @@
+{
+    "info": {
+        "_postman_id": "1abe07e7-aed0-42aa-8842-ca96dddd3cb6",
+        "name": "billing",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "get one invoice",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "bw.nicov.dev/api/billing/5edbf57458dde100434e3c91/5edbee147aae4300428afc27",
+                    "host": [
+                        "bw",
+                        "nicov",
+                        "dev"
+                    ],
+                    "path": [
+                        "api",
+                        "billing",
+                        "5edbf57458dde100434e3c91",
+                        "5edbee147aae4300428afc27"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "get bills of user",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "bw.nicov.dev/api/billing/5edbf57458dde100434e3c91",
+                    "host": [
+                        "bw",
+                        "nicov",
+                        "dev"
+                    ],
+                    "path": [
+                        "api",
+                        "billing",
+                        "5edbf57458dde100434e3c91"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "pay bill",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"eventId\": \"5edbee147aae4300428afc27\",\n\t\"accountId\": \"5edbf57458dde100434e3c91\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "bw.nicov.dev/api/billing/pay",
+                    "host": [
+                        "bw",
+                        "nicov",
+                        "dev"
+                    ],
+                    "path": [
+                        "api",
+                        "billing",
+                        "pay"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "protocolProfileBehavior": {}
+}
