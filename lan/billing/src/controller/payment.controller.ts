@@ -1,24 +1,39 @@
 import { Request, Response } from 'express';
 import * as db from '../models';
 import { ICart } from '../models/payment.model';
+import { checkAccount } from './ext.account.controller';
 const Payment = db.default.Payment;
 
-export async function requestPayment(paymentObj: Object) {
+export async function requestPayment(paymentObj: object) {
   const payment = new Payment(paymentObj);
+  if (!await checkAccount(payment._id.accountId)) {
+    console.error(`requestPayment with ${payment._id.accountId} failed: accountId does not exist`)
+    return;
+  }
+
   // ignore incoming state
   payment.state = 'REQUESTED';
+
   payment.save()
-    .then(data => console.log(data))
+    // .then(data => console.log(data))
     .catch(err => {
       console.error(err);
-    })
+    });
 }
 
 export async function pendingPayment(_id: any) {
+  if (!await checkAccount(_id.accountId)) {
+    console.error(`pendingPayment with ${_id.accountId} failed: accountId does not exist`)
+    return;
+  }
   setState(_id, "PENDING");
 }
 
 export async function completedPayment(_id: any) {
+  if (!await checkAccount(_id.accountId)) {
+    console.error(`completedPayment with ${_id.accountId} failed: accountId does not exist`)
+    return;
+  }
   setState(_id, "COMPLETED");
 }
 
@@ -34,6 +49,10 @@ async function setState(_id: any, state: string) {
 }
 
 export async function addCartElementArray(_id: any, cartArray: ICart[], replace = false) {
+  if (!await checkAccount(_id.accountId)) {
+    console.error(`addCartElementArray with ${_id.accountId} failed: accountId does not exist`)
+    return;
+  }
   const target = await Payment.findOne({ _id });
 
   if (!target) {
@@ -49,6 +68,10 @@ export async function addCartElementArray(_id: any, cartArray: ICart[], replace 
 }
 
 export async function removeCartElement(_id: any, sourceId: string, purpose: string) {
+  if (!await checkAccount(_id.accountId)) {
+    console.error(`removeCartElement with ${_id.accountId} failed: accountId does not exist`)
+    return;
+  }
   const target = await Payment.findOne({ _id });
   if (!target) {
     console.error("account-event pair does not exist")
