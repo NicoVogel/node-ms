@@ -28,7 +28,7 @@
                 [disabled]="checkRegistrationComplete(_event) && checkConfirmAvailable(_event)">X</button>
             </td>
             <td *ngIf="checkConfirmAvailable(_event)">
-              <button (click)="confirmAvailable(_event.id, content)" class="btn btn-outline-primary"
+              <button (click)="confirmAvailable(_event.id, content)" class="btn btn-primary"
                 [disabled]="checkRegistrationComplete(_event)">X</button>
             </td>
           </tr>
