@@ -8,9 +8,9 @@ export function initAMQP() {
     if (topicKeys.hasOwnProperty(key)) {
       const element = topicKeys[key];
       element.forEach(key => {
-        eventAdapter.listen(key).subscribe(e => console.log(e));
+        eventAdapter.listen(key).subscribe(e => console.log(`${key}:\t\t${JSON.stringify(e)}`));
       });
     }
   }
-  eventAdapter.active();
+  eventAdapter.activate();
 }

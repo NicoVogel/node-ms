@@ -14,7 +14,7 @@ export function initAMQP() {
     if (topicKeys.hasOwnProperty(key)) {
       const element = topicKeys[key];
       element.forEach(key => {
-        eventAdapter.listen(key).subscribe(e => console.log(e));
+        eventAdapter.listen(key).subscribe(e => console.log(`${key}:\t\t${JSON.stringify(e)}`));
       });
     }
   }
@@ -28,7 +28,6 @@ export async function getById(model: Model<IUser>, id: string) {
 
 export async function authenticate(model: Model<IUser>, { name, password }: any) {
   const user = await model.findOne({ name });
-  console.log(user);
   if (user && bcrypt.compareSync(password, user.passwordHash)) {
     const token = jwt.sign({ sub: user.id }, secret);
     return {
