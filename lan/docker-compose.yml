@@ -46,8 +46,11 @@ services:
     image: grafana/grafana
     volumes:
       - ./datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana.ini:/etc/grafana/grafana.ini
     depends_on:
       - prometheus
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: root
     # ports:
       # - 3000:3000
   
