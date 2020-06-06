@@ -129,7 +129,7 @@ export async function pay(req: Request, res: Response) {
     target.state = "COMPLETED";
     target.save();
     eventAdapter.publish('billing.completed', { _id });
-    res.sendStatus(200).send('OK');
+    res.sendStatus(200);
   } catch (err) {
     res.status(500).send({
       message:
