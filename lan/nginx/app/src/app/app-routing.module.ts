@@ -11,8 +11,8 @@ import { EventComponent } from './event/event.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'event', component: EventComponent },
+  { path: 'about', component: AboutComponent, canActivate: [LoginGuardGuard] },
+  { path: 'event', component: EventComponent, canActivate: [LoginGuardGuard] },
   { path: 'home', component: HomeComponent, canActivate: [LoginGuardGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
