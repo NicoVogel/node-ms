@@ -58,7 +58,7 @@ export class EventAdapter {
         }
     }
 
-    public active() {
+    public activate() {
         this.connection.completeConfiguration().then(() => {
             this.readyForPublish = true;
             this.publishinQueue.forEach(publish => {
