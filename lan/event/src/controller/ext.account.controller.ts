@@ -1,6 +1,14 @@
 import * as db from '../models';
 import { Types } from 'mongoose';
+import { EventAdapter } from '../services/rabbitmq.service';
 const Account = db.default.Account;
+const eventAdapter = new EventAdapter();
+
+
+export function initAccountMessaging() {
+  eventAdapter.listen('account.created').subscribe(data => addAccount(data));
+}
+
 
 export async function addAccount(accountObj: Object) {
   const account = new Account(accountObj);

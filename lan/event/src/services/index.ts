@@ -1,18 +1,8 @@
 
 import { EventAdapter } from './rabbitmq.service';
-import { topicKeys } from '../config/rabbitmq.config';
 import { Model } from 'mongoose';
 import { IEvent } from '../models/event.model';
-import { addAccount } from '../controller/ext.account.controller';
-
 export const eventAdapter = new EventAdapter();
-
-
-export function initAMQP() {
-    if (topicKeys.includes('account.created')) {
-        eventAdapter.listen('account.created').subscribe(data => addAccount(data));
-    }
-}
 
 // CREATE
 
@@ -22,9 +12,7 @@ export async function create(model: Model<IEvent>, eventParam: IEvent) {
     }
 
     const event = new model(eventParam);
-    return await event.save().then(data => {
-        eventAdapter.publish('event.created', { _id: data.id, name: data.title });
-    });
+    return await event.save();
 }
 
 // READ
