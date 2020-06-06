@@ -1,19 +1,27 @@
 
 import { EventAdapter } from './rabbitmq.service';
-import { topicKeys } from '../config/rabbitmq.config';
-import { addAccount } from '../controller/ext.account.controller';
+import { Model } from 'mongoose';
+import { IEvent } from '../models/event.model';
+export const eventAdapter = new EventAdapter();
 
-export function initAMQP() {
-  // topicKeys.forEach(key => {
-  //   try {
-  //     eventAdapter.listen(key).subscribe(e => console.log(`${key}: \t\t${JSON.stringify(e)} `));
-  //   } catch (error) {
-  //     console.error(`wrong topicKey in config! the wrong key is: ${key}. Error: ${error.getMessage()} `);
-  //   }
-  // })
+// CREATE
 
-  if (topicKeys.includes('account.created')) {
-    eventAdapter.listen('account.created').subscribe(data => addAccount(data));
-  }
-  eventAdapter.activate();
+export async function create(model: Model<IEvent>, eventParam: IEvent) {
+    if (await model.findOne({ title: eventParam.title })) {
+        throw `Event ${eventParam.title} already exists`;
+    }
+
+    const event = new model(eventParam);
+    return await event.save();
 }
+
+// READ
+
+export async function getById(model: Model<IEvent>, id: string) {
+    return await model.findById(id);
+}
+
+export async function getAll(model: Model<IEvent>) {
+    return await model.find();
+}
+
