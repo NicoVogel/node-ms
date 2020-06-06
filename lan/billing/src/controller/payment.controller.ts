@@ -3,7 +3,6 @@ import * as db from '../models';
 import { ICart } from '../models/payment.model';
 import { checkAccount } from './ext.account.controller';
 import { eventAdapter } from '../services';
-import { async } from 'rxjs/internal/scheduler/async';
 const Payment = db.default.Payment;
 
 export function initPaymentMessaging() {
