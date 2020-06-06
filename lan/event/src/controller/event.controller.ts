@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import * as dbService from '../services'
 import * as db from '../models';
-import { EventAdapter } from '../services/rabbitmq.service';
+import { eventAdapter } from '../services';
 
-const eventAdapter = new EventAdapter();
 
 export function create(req: Request, res: Response, next: NextFunction) {
     dbService.create(db.default.Event, req.body)

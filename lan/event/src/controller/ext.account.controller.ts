@@ -1,8 +1,7 @@
 import * as db from '../models';
 import { Types } from 'mongoose';
-import { EventAdapter } from '../services/rabbitmq.service';
+import { eventAdapter } from '../services';
 const Account = db.default.Account;
-const eventAdapter = new EventAdapter();
 
 
 export function initAccountMessaging() {
