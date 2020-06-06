@@ -12,5 +12,5 @@ export const accountSchema = new mongo.Schema({
 
 accountSchema.set('toJSON', JSONOptions);
 
-const Account = mongo.model<IAccount>('Payment', accountSchema);
+const Account = mongo.model<IAccount>('Account', accountSchema);
 export default Account;
