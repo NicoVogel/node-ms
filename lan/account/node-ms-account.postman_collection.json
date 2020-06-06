@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "b16497be-9c40-418f-94c7-e55718aecdea",
+		"name": "node-ms-account",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"user1\",\n\t\"password\": \"password1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "host/api/account/users/register",
+					"host": [
+						"bw",
+						"vietdo",
+						"me"
+					],
+					"path": [
+						"api",
+						"account",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWQ5MWUyNWZkOWQyMzAwYTQ4MTAwOTMiLCJpYXQiOjE1OTEyODczNTJ9.TC-ZILpIWXwiNlQubVO2NJ6QozM9zbKwWdlH-njdDdo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"user1\",\n\t\"password\": \"passwordnew\"\n}"
+				},
+				"url": {
+					"raw": "host/api/account/users/5ed91e25fd9d2300a4810093",
+					"host": [
+						"bw",
+						"vietdo",
+						"me"
+					],
+					"path": [
+						"api",
+						"account",
+						"users",
+						"5ed91e25fd9d2300a4810093"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"user1\",\n\t\"password\": \"password1\"\n}"
+				},
+				"url": {
+					"raw": "host/api/account/users/authenticate",
+					"host": [
+						"bw",
+						"vietdo",
+						"me"
+					],
+					"path": [
+						"api",
+						"account",
+						"users",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "host/api/account/users/5ed90cb6694464007a60aa88",
+					"host": [
+						"bw",
+						"vietdo",
+						"me"
+					],
+					"path": [
+						"api",
+						"account",
+						"users",
+						"5ed90cb6694464007a60aa88"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWQ5MWUyNWZkOWQyMzAwYTQ4MTAwOTMiLCJpYXQiOjE1OTEyODczNTJ9.TC-ZILpIWXwiNlQubVO2NJ6QozM9zbKwWdlH-njdDdo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "host/api/account/users",
+					"host": [
+						"bw",
+						"vietdo",
+						"me"
+					],
+					"path": [
+						"api",
+						"account",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "host/api/account/users/5ed911a2bf7a3e00ea7b35bc",
+					"host": [
+						"bw",
+						"vietdo",
+						"me"
+					],
+					"path": [
+						"api",
+						"account",
+						"users",
+						"5ed911a2bf7a3e00ea7b35bc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "host/api/account/users/current",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWQ5MWUyNWZkOWQyMzAwYTQ4MTAwOTMiLCJpYXQiOjE1OTEyODczNTJ9.TC-ZILpIWXwiNlQubVO2NJ6QozM9zbKwWdlH-njdDdo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "host/api/account/users/current",
+					"host": [
+						"bw",
+						"vietdo",
+						"me"
+					],
+					"path": [
+						"api",
+						"account",
+						"users",
+						"current"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

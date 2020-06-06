@@ -1,0 +1,24 @@
+#event{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin:auto;
+  form{
+    min-width: 400px;
+    padding: 30px;
+    border-radius: 5px;
+   
+  button{
+    margin: 0 5px ;
+  }
+  input{
+    margin: 10px 0;
+  }
+}
+    table{
+      margin:50px;
+      th,td {
+        padding:2px 5px;
+      }
+    }
+}

@@ -1,0 +1,170 @@
+{
+    "info": {
+        "_postman_id": "c1585277-141d-4195-b6ae-3f145b3184f4",
+        "name": "event",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "get all events",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "bw.nicov.dev/api/event/",
+                    "host": [
+                        "bw",
+                        "nicov",
+                        "dev"
+                    ],
+                    "path": [
+                        "api",
+                        "event",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "create event",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"title\": \"test\",\n\t\"description\": \"some description\",\n\t\"price\": 5.5 \n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "bw.nicov.dev/api/event/",
+                    "host": [
+                        "bw",
+                        "nicov",
+                        "dev"
+                    ],
+                    "path": [
+                        "api",
+                        "event",
+                        ""
+                    ],
+                    "query": [
+                        {
+                            "key": "title",
+                            "value": "",
+                            "disabled": true
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "get event by id",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "bw.nicov.dev/api/event/5edbd75662659b005f1e2668",
+                    "host": [
+                        "bw",
+                        "nicov",
+                        "dev"
+                    ],
+                    "path": [
+                        "api",
+                        "event",
+                        "5edbd75662659b005f1e2668"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "register user for event",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"eventId\": \"5edbd75662659b005f1e2668\",\n\t\"accountId\": \"5edbd6b4ae47600042446b91\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "bw.nicov.dev/api/event/register",
+                    "host": [
+                        "bw",
+                        "nicov",
+                        "dev"
+                    ],
+                    "path": [
+                        "api",
+                        "event",
+                        "register"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "confirm event registration",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"eventId\": \"5edbd75662659b005f1e2668\",\n\t\"accountId\": \"5edbd6b4ae47600042446b91\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "bw.nicov.dev/api/event/confirm",
+                    "host": [
+                        "bw",
+                        "nicov",
+                        "dev"
+                    ],
+                    "path": [
+                        "api",
+                        "event",
+                        "confirm"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "protocolProfileBehavior": {}
+}

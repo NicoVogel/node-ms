@@ -1,0 +1,16 @@
+<nav ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+  <ng-container ngbNavItem>
+    <a ngbNavLink routerLink="/home" routerLinkActive="active">Home</a>
+  </ng-container>
+  <ng-container ngbNavItem>
+    <a ngbNavLink routerLink="/event" routerLinkActive="active">Event</a>
+  </ng-container>
+  <!-- <ng-container ngbNavItem>
+    <a ngbNavLink routerLink="/about" routerLinkActive="active">About</a>
+  </ng-container> -->
+  <ng-container *ngIf="currentUser" ngbNavItem>
+    <a ngbNavLink (click)="logout()">Logout</a>
+  </ng-container>
+</nav>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,31 @@
+version: "2"
+services:
+  zookeeper:
+    image: zookeeper:3.4
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: ${KAFKA_ADVERTISED_HOST_NAME}
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # https://github.com/wurstmeister/kafka-docker#automatically-create-topics
+      KAFKA_CREATE_TOPICS: "logs:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  consumer:
+    build: consumer
+    depends_on:
+      - kafka
+  producer:
+    build: producer
+    depends_on:
+      - consumer
+      - kafka

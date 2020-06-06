@@ -1,0 +1,89 @@
+version: "3.3"
+services: 
+
+  # api gateway
+  nginx:
+    build: nginx
+    ports: 
+      - 80:80
+      - 8080:8080
+    depends_on:
+      - grafana
+    environment: 
+      PORT: 80
+      MONGO_PORT: 8080
+      # DEPLOY_ENV: development
+      SERVER_NAME: ${SERVER_NAME}
+  
+  # database
+  mongodb:
+    image: mongo:latest
+    # ports:
+    #   - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  # async messaging
+  rabbitmq:
+      image: rabbitmq:3-management-alpine
+      # ports:
+        # management interface
+        # - 15672:15672
+  
+  # monitoring
+  # tutorial: https://prometheus.io/docs/guides/cadvisor/#prometheus-configuration
+  # code example: https://github.com/vegasbrianc/prometheus/blob/master/docker-compose.yml
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    # ports:
+    #   - 9090:9090
+
+  # monitoring visualization
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana.ini:/etc/grafana/grafana.ini
+    depends_on:
+      - prometheus
+    environment:
+      # user name of admin is: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    # ports:
+      # - 3000:3000
+  
+  # account service
+  account:
+    build: account
+    # environment: 
+    #   NODE_ENV: development
+    # volumes:
+    #   - ./account/src:/app/src
+  
+  # billing service
+  billing:
+    build: billing
+    # environment: 
+    #   NODE_ENV: development
+    # volumes:
+    #   - ./billing/src:/app/src
+  
+  # event service
+  event:
+    build: event
+    # environment: 
+    #   NODE_ENV: development
+    # volumes:
+    #   - ./event/src:/app/src
+  # blank:
+  #   build: blank
+  #   environment: 
+  #     NODE_ENV: development
+  #   volumes:
+  #     - ./blank/src:/app/src
+

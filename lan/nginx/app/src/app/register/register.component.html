@@ -1,0 +1,48 @@
+<div id="register">
+
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+    <h1>Registration</h1>
+    <p>Are you a team or do you play alone?</p>
+    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="type">
+      <label class="btn-primary" ngbButtonLabel>
+        <input ngbButton type="radio" value="users"> Single
+      </label>
+      <label class="btn-primary" ngbButtonLabel>
+        <input ngbButton type="radio" value="teams"> Team
+      </label>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label>Type in your Name</label>
+      <input type="text" class="form-control" id="inlineFormInputGroup" formControlName="name" placeholder="Name"
+        required>
+      <small id="emailHelp" class="form-text text-muted">This name will be public.</small>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password"
+        placeholder="Password" required>
+    </div>
+
+    <div formArrayName="members" class="form-group" *ngIf="registrationForm.value['type']==='teams'">
+      <h3>Team Members</h3>
+      <label class="btn btn-light" (click)="addTeamMember()">Add team
+        members</label>
+      <label class="btn btn-secondary" (click)="removeTeamMember()">Remove team members</label>
+      <div *ngFor="let member of members.controls; let i=index">
+        <label>
+          Member {{i+1}}:
+          <input type="text" [formControlName]="i">
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Submit</button>
+    <button type="reset" class="btn btn-danger" (click)="registrationForm.reset()">Reset</button>
+
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+      {{error}}
+    </div>
+  </form>
+
+</div>

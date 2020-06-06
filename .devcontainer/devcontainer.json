@@ -1,28 +1,36 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.100.0/containers/typescript-node-12
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.119.0/containers/docker-from-docker
 {
-	"name": "Node.js 12 & TypeScript",
+	"name": "Docker from Docker",
 	"dockerFile": "Dockerfile",
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
+	],
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash"
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"files.autoSave": "onFocusChange",
+		"mochaExplorer.files": "test/**/*.ts",
+		"mochaExplorer.require": "ts-node/register",
+		"testExplorer.onReload": "retire",
+		"testExplorer.onStart": "retire",
+		"editor.tabSize": 2,
+		"editor.detectIndentation": false,
+		"eslint.autoFixOnSave": true,
+		"eslint.validate": [
+			"javascript",
+			{
+				"language": "typescript",
+				"autoFix": true
+			},
+		]
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
+		"ms-azuretools.vscode-docker",
 		"dbaeumer.vscode-eslint",
 		"ms-vscode.vscode-typescript-tslint-plugin",
-		"yzhang.markdown-all-in-one",
-		"mutantdino.resourcemonitor",
-		"esbenp.prettier-vscode"
+		"hbenl.vscode-mocha-test-adapter"
 	],
-	"appPort": [
-		"3000:3000",
-		"3001:3001"
-	]
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "node"
+	"postCreateCommand": "npm install -g docker-extension @angular/cli"
 }

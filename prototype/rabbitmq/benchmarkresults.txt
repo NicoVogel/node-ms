@@ -1,0 +1,12 @@
+producer_1  | start transmission
+producer_1  | end transmission after 283ms
+consumer_9  | [2020-06-05 09:00:29.134Z]: done with receiving after 4577ms and total match count is 10000/10000
+consumer_2  | [2020-06-05 09:00:29.135Z]: done with receiving after 4618ms and total match count is 10000/10000
+consumer_7  | [2020-06-05 09:00:29.158Z]: done with receiving after 4642ms and total match count is 10000/10000
+consumer_8  | [2020-06-05 09:00:29.141Z]: done with receiving after 4613ms and total match count is 10000/10000
+consumer_4  | [2020-06-05 09:00:29.163Z]: done with receiving after 4613ms and total match count is 10000/10000
+consumer_5  | [2020-06-05 09:00:29.167Z]: done with receiving after 4643ms and total match count is 10000/10000
+consumer_6  | [2020-06-05 09:00:29.178Z]: done with receiving after 4636ms and total match count is 10000/10000
+consumer_1  | [2020-06-05 09:00:29.186Z]: done with receiving after 4652ms and total match count is 10000/10000
+consumer_3  | [2020-06-05 09:00:29.195Z]: done with receiving after 4660ms and total match count is 10000/10000
+consumer_10 | [2020-06-05 09:00:29.202Z]: done with receiving after 4649ms and total match count is 10000/10000
