@@ -3,13 +3,15 @@ services:
 
   # api gateway
   nginx:
-    build: app
+    build: nginx
     ports: 
       - 80:80
-      - 443:443
+    depends_on:
+      - grafana
     environment: 
       PORT: 80
-      DEPLOY_ENV: development
+      # DEPLOY_ENV: development
+      SERVER_NAME: ${SERVER_NAME}
   
   # database
   mongodb:
