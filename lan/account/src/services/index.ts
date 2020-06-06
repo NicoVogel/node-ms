@@ -73,7 +73,7 @@ export async function create(model: Model<IUser>, userParam: any) {
     user.passwordHash = bcrypt.hashSync(userParam.password, 10);
   }
   return await user.save().then(data => {
-    eventAdapter.publish('account.created', data);
+    eventAdapter.publish('account.created', { _id: data.id, name: data.name });
   });
 }
 
