@@ -8,5 +8,11 @@ export const mainTopics = [
 
 export const topicKeys = [
     'account.created',
-    'billing.payment'
+    'billing.request',//states
+    'billing.pending',
+    'billing.completed',
+    'billing.addToCart',//cartAction
+    'billing.removeFromCart',
+    'billing.replaceCart',
+    'billing.emptyCart'
 ]
