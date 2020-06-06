@@ -73,3 +73,9 @@ const billingEvents = {
     }
   }
 }
+const eventEvents = {
+  'event.create': {
+    _id: "mongo ObjectId string",
+    title: "string"
+  }
+}
