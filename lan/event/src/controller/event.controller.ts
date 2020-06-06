@@ -19,6 +19,7 @@ const mapToOutput = (event: IEvent, accountId: string) => {
         title: event.title,
         created: event.created,
         description: event.description,
+        price: event.price,
         registered: [...event.registered].filter(x => x._id === accountId)
     }
 }
@@ -27,8 +28,10 @@ const mapToOutput = (event: IEvent, accountId: string) => {
 
 export function create(req: Request, res: Response, next: NextFunction) {
     dbService.create(db.default.Event, req.body)
-        // .then(data => tip(() => eventAdapter.publish('event.created', { _id: data.id, name: data.title }), data))
-        .then(tip((data) => eventAdapter.publish('event.created', { _id: data.id, title: data.title })))
+        .then(tip((data) => eventAdapter.publish('event.created', {
+            _id: data.id,
+            title: data.title
+        })))
         .then(data => res.json(data))
         .catch(next)
 }
@@ -47,7 +50,23 @@ export function getAll(req: Request, res: Response, next: NextFunction) {
 
 export function register(req: Request, res: Response, next: NextFunction) {
     dbService.register(db.default.Event, db.default.Account, req.body.eventId, req.body.accountId)
-        .then(tip(data => eventAdapter.publish('event.registered', { eventId: data.event.id, accountId: data.account.id })))
+        .then(tip(data => eventAdapter.publish('event.registered', {
+            eventId: data.event.id,
+            accountId: data.account.id
+        })))
+        .then(tip(data => eventAdapter.publish('billing.request', {
+            _id: {
+                accountId: data.account.id,
+                eventId: data.event.id
+            },
+            cart: [
+                {
+                    sourceId: "event",
+                    purpose: "Event registration fee",
+                    amount: data.event.price
+                }
+            ]
+        })))
         .then(data => mapToOutput(data.event, data.account.id))
         .then(data => res.json(data))
         .catch(next);
@@ -55,7 +74,12 @@ export function register(req: Request, res: Response, next: NextFunction) {
 
 export function confirmRegistration(req: Request, res: Response, next: NextFunction) {
     dbService.confirm(db.default.Event, db.default.Account, req.body.eventId, req.body.accountId)
-        .then(tip(data => eventAdapter.publish('billing.pending', { _id: { eventId: data.event.id, accountId: data.account._id } })))
+        .then(tip(data => eventAdapter.publish('billing.pending', {
+            _id: {
+                eventId: data.event.id,
+                accountId: data.account._id
+            }
+        })))
         .then(data => mapToOutput(data.event, data.account._id))
         .then(data => res.json(data))
         .catch(next);

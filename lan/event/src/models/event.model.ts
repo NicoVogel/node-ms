@@ -6,6 +6,7 @@ export interface IEvent extends mongo.Document {
     title: string;
     created: Date;
     description: string;
+    price: number;
     registered: {
         _id: string,
         name: string,
@@ -18,6 +19,7 @@ export const eventSchema = new mongo.Schema({
     created: { type: Date, default: Date.now },
     title: String,
     description: String,
+    price: Number,
     registered: [{
         name: { type: String, required: true },
         _id: Object,
