@@ -1,25 +1,12 @@
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
 import { EventAdapter } from './rabbitmq.service';
-import { topicKeys } from '../config/rabbitmq.config';
 import { secret } from '../config/jwt.config'
 
 import { Model } from 'mongoose';
 import { IUser } from '../models/user.model';
 
 export const eventAdapter = new EventAdapter();
-
-export function initAMQP() {
-  topicKeys.forEach(key => {
-    try {
-      eventAdapter.listen(key).subscribe(e => console.log(`${key}: \t\t${JSON.stringify(e)} `));
-    } catch (error) {
-      console.error(`wrong topicKey in config! the wrong key is: ${key}. Error: ${error.getMessage()} `);
-    }
-  })
-
-  eventAdapter.activate();
-}
 
 export async function getById(model: Model<IUser>, id: string) {
   return await model.findById(id);
