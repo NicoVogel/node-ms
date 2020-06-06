@@ -3,15 +3,11 @@ import * as db from '../models';
 import { ICart } from '../models/payment.model';
 import { checkAccount } from './ext.account.controller';
 import { eventAdapter } from '../services';
-import { runInThisContext } from 'vm';
-import { async } from 'rxjs/internal/scheduler/async';
-import { resolve } from 'path';
 const Payment = db.default.Payment;
 
 export function initPaymentMessaging() {
   eventAdapter.listen('billing.request').subscribe(data => requestPayment(data));
   eventAdapter.listen('billing.pending').subscribe(data => pendingPayment(data._id));
-  // eventAdapter.listen('billing.completed').subscribe(data => completedPayment(data._id));
   eventAdapter.listen('billing.addToCart').subscribe(data => addCartElementArray(data._id, data.cart));
   eventAdapter.listen('billing.replaceCart').subscribe(data => addCartElementArray(data._id, data.cart, true));
   eventAdapter.listen('billing.emptyCart').subscribe(data => addCartElementArray(data._id, [], true));
@@ -22,11 +18,27 @@ const findPayment = async (_id: { accountId: string, eventId: string }) =>
   await Payment.findOne({ _id: { accountId: _id.accountId, eventId: _id.eventId } });
 
 
-export async function requestPayment(paymentObj: object) {
-  const payment = new Payment(paymentObj);
-  if (!await checkAccount(payment._id.accountId)) {
-    console.error(`requestPayment with ${payment._id.accountId} failed: accountId does not exist`)
+export async function requestPayment(paymentObj: {
+  _id: {
+    accountId: string,
+    eventId: string
+  },
+  cart?: [
+    {
+      sourceId: string,
+      purpose: string,
+      amount: number
+    }
+  ]
+}) {
+  if (!await checkAccount(paymentObj._id.accountId)) {
+    console.error(`requestPayment with ${paymentObj._id.accountId} failed: accountId does not exist`)
     return;
+  }
+
+  let payment = await findPayment(paymentObj._id);
+  if (payment === null) {
+    payment = new Payment(paymentObj);
   }
 
   // ignore incoming state
