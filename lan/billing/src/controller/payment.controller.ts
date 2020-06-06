@@ -6,8 +6,9 @@ import { eventAdapter } from '../services';
 const Payment = db.default.Payment;
 
 export function initPaymentMessaging() {
+  eventAdapter.listen('billing.request').subscribe(data => requestPayment(data));
   eventAdapter.listen('billing.pending').subscribe(data => pendingPayment(data._id));
-  eventAdapter.listen('billing.completed').subscribe(data => completedPayment(data._id));
+  // eventAdapter.listen('billing.completed').subscribe(data => completedPayment(data._id));
   eventAdapter.listen('billing.addToCart').subscribe(data => addCartElementArray(data._id, data.cart));
   eventAdapter.listen('billing.replaceCart').subscribe(data => addCartElementArray(data._id, data.cart, true));
   eventAdapter.listen('billing.emptyCart').subscribe(data => addCartElementArray(data._id, [], true));
