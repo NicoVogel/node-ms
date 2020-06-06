@@ -4,11 +4,12 @@ import { topicKeys } from '../config/rabbitmq.config';
 export const eventAdapter = new EventAdapter();
 
 export function initAMQP() {
-  for (const key in topicKeys) {
-    if (topicKeys.hasOwnProperty(key)) {
-      const element = topicKeys[key];
-      element.forEach(key => {
-        eventAdapter.listen(key).subscribe(e => console.log(`${key}:\t\t${JSON.stringify(e)}`));
+  for (const service in topicKeys) {
+    if (topicKeys.hasOwnProperty(service)) {
+      const serviceEvent = topicKeys[service];
+
+      serviceEvent.forEach(event => {
+        eventAdapter.listen(event).subscribe(e => console.log(`${event}:\t\t${JSON.stringify(e)}`));
       });
     }
   }
