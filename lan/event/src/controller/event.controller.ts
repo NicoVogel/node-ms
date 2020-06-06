@@ -14,7 +14,7 @@ const notFound = (res: Response) => (data: any) =>
 export function create(req: Request, res: Response, next: NextFunction) {
     dbService.create(db.default.Event, req.body)
         // .then(data => tip(() => eventAdapter.publish('event.created', { _id: data.id, name: data.title }), data))
-        .then(tip((data) => eventAdapter.publish('event.created', { _id: data.id, name: data.title })))
+        .then(tip((data) => eventAdapter.publish('event.created', { _id: data.id, title: data.title })))
         .then(data => res.json(data))
         .catch(next)
 }
