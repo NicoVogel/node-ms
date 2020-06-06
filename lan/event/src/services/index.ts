@@ -12,7 +12,6 @@ export function initAMQP() {
     if (topicKeys.includes('account.created')) {
         eventAdapter.listen('account.created').subscribe(data => addAccount(data));
     }
-    eventAdapter.activate();
 }
 
 // CREATE
