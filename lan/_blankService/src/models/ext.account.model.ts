@@ -2,8 +2,8 @@ import * as mongo from 'mongoose';
 import { JSONOptions } from '../config/db.config';
 
 export interface IAccount extends mongo.Document {
-  name: String;
-  _id: String;
+  name: string;
+  _id: string;
 }
 
 export const accountSchema = new mongo.Schema({

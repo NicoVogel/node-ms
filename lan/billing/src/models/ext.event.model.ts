@@ -3,7 +3,7 @@ import { JSONOptions } from '../config/db.config';
 
 export interface IEvent extends mongo.Document {
   title: string;
-  _id: object;
+  _id: string;
 }
 
 export const eventSchema = new mongo.Schema({
