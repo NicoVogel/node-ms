@@ -1,9 +1,26 @@
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
+import { EventAdapter } from './rabbitmq.service';
+import { topicKeys } from '../config/rabbitmq.config';
 import { secret } from '../config/jwt.config'
 
 import { Model } from 'mongoose';
 import { IUser } from '../models/user.model';
+
+export const eventAdapter = new EventAdapter();
+
+export function initAMQP() {
+  for (const key in topicKeys) {
+    if (topicKeys.hasOwnProperty(key)) {
+      const element = topicKeys[key];
+      element.forEach(key => {
+        eventAdapter.listen(key).subscribe(e => console.log(e));
+      });
+    }
+  }
+
+  eventAdapter.activate();
+}
 
 export async function getById(model: Model<IUser>, id: string) {
   return await model.findById(id);
@@ -56,7 +73,9 @@ export async function create(model: Model<IUser>, userParam: any) {
   if (userParam.password) {
     user.passwordHash = bcrypt.hashSync(userParam.password, 10);
   }
-  return await user.save();
+  return await user.save().then(data => {
+    eventAdapter.publish('account.created', data);
+  });
 }
 
 export async function _delete(model: Model<IUser>, id: string) {
