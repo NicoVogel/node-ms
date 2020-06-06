@@ -11,6 +11,7 @@ import { AboutComponent } from './about/about.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helper/jwt.interceptor';
+import { EventComponent } from './event/event.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { JwtInterceptor } from './_helper/jwt.interceptor';
     HomeComponent,
     AboutComponent,
     RegisterComponent,
+    EventComponent,
   ],
   imports: [
     BrowserModule,
