@@ -1,10 +1,34 @@
+const accountRest = {
+    post: {
+        '/user/authenticate': {
+            name: "string",
+            password: "password"
+        },
+        '/user/register': {
+            name: "string",
+            password: "password"
+        }
+    },
+    get: {
+        '/user/current': {},
+        '/user/:id': {},
+        '/user/': {}
+    },
+    put: {
+        '/user/:id': {
+            name: "string",
+            password: "password"
+        }
+    },
+    delete: {
+        '/user/:id': {}
+    }
+}
 const billingRest = {
     post: {
         '/pay': {
-            body: {
-                eventId: "mongo ObjectId string",
-                accountId: "mongo ObjectId string"
-            }
+            eventId: "mongo ObjectId string",
+            accountId: "mongo ObjectId string"
         }
     },
     get: {
@@ -15,23 +39,17 @@ const billingRest = {
 const eventRest = {
     post: {
         '/': {
-            body: {
-                title: "string",
-                description: "string",
-                price: "number"
-            }
+            title: "string",
+            description: "string",
+            price: "number"
         },
         '/register': {
-            body: {
-                eventId: "mongo ObjectId string",
-                accountId: "mongo ObjectId string"
-            }
+            eventId: "mongo ObjectId string",
+            accountId: "mongo ObjectId string"
         },
         '/confirm': {
-            body: {
-                eventId: "mongo ObjectId string",
-                accountId: "mongo ObjectId string"
-            }
+            eventId: "mongo ObjectId string",
+            accountId: "mongo ObjectId string"
         }
     },
     get: {
